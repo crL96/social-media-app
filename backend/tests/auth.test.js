@@ -86,3 +86,39 @@ test("sign-up route return 400 if confPassword doesnt match", (done) => {
         })
         .expect(400, done);
 });
+
+// LOG IN
+test("login sucess returns 200", (done) => {
+    request(app)
+        .post("/sign-up")
+        .type("application/json")
+        .send({
+            email: "test123@gmail.com",
+            username: "test123",
+            password: "test123",
+            confPassword: "test123",
+        })
+        .expect(200)
+        .then(() => {
+            request(app)
+                .post("/log-in")
+                .type("application/json")
+                .send({
+                    email: "test123@gmail.com",
+                    password: "test123",
+                })
+                .expect("Content-Type", /json/)
+                .expect(200, done);
+        })
+});
+
+test("login unsuccessful attempt returns 401", (done) => {
+        request(app)
+            .post("/log-in")
+            .type("application/json")
+            .send({
+                email: "test123@gmail.com",
+                password: "test123",
+            })
+            .expect(401, done);
+});
