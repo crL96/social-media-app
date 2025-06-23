@@ -2,28 +2,14 @@ const router = require("express").Router();
 const controller = require("../controllers/userController");
 const passport = require("../config/passport");
 
-router.get(
-    "/profile",
-    passport.authenticate("jwt", { session: false }),
-    controller.getCurrentUserProfile
-);
+router.use(passport.authenticate("jwt", { session: false }));
 
-router.put(
-    "/profile",
-    passport.authenticate("jwt", { session: false }),
-    controller.updateUserProfile
-);
+router.get("/profile", controller.getCurrentUserProfile);
 
-router.get(
-    "/profile/:username",
-    passport.authenticate("jwt", { session: false }),
-    controller.getUserProfile
-);
+router.put("/profile", controller.updateUserProfile);
 
-router.get(
-    "/search/:searchterm",
-    passport.authenticate("jwt", { session: false }),
-    controller.searchUsers
-);
+router.get("/profile/:username", controller.getUserProfile);
+
+router.get("/search/:searchterm", controller.searchUsers);
 
 module.exports = router;
