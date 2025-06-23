@@ -1,4 +1,5 @@
 const prisma = require("../config/prisma");
+const { validationResult, validatePost } = require("../util/validation");
 
 async function getFollowingPosts(req, res) {
     try {
@@ -106,7 +107,36 @@ async function getPost(req, res) {
     }
 }
 
+createPost = [
+    validatePost,
+
+    async (req, res) => {
+        //Check if validation passed
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+            });
+        }
+
+        try {
+            await prisma.post.create({
+                data: {
+                   text: req.body.text,
+                   authorId: req.user.id, 
+                }
+            });
+            res.status(200).send("Post created");
+        } catch (err) {
+            console.log(err.message);
+            res.status(500).send("Internal server error");
+        }
+    
+    }
+];
+
 module.exports = {
     getFollowingPosts,
     getPost,
+    createPost,
 }

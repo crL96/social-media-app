@@ -6,6 +6,7 @@ const commentsRouter = require("./comments");
 router.use(passport.authenticate("jwt", { session: false }));
 
 router.get("/", controller.getFollowingPosts);
+router.post("/", controller.createPost);
 
 router.get("/:postId", controller.getPost);
 

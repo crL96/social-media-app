@@ -94,9 +94,19 @@ const validateComment = [
         .withMessage("A comment can be a maximum of 300 characters"),
 ];
 
+const validatePost = [
+    body("text")
+        .notEmpty().withMessage("Post cannot be empty")
+        .isString().withMessage("Post has to be of type string")
+        .trim()
+        .isLength({ max: 500 })
+        .withMessage("A post can be a maximum of 500 characters"),
+];
+
 module.exports = {
     validationResult,
     validateUser,
     validateUserProfile,
     validateComment,
+    validatePost,
 }
