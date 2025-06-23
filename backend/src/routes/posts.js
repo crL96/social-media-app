@@ -8,5 +8,11 @@ router.get(
     controller.getFollowingPosts
 );
 
+router.get(
+    "/:postId",
+    passport.authenticate("jwt", { session: false }),
+    controller.getPost
+);
+
 
 module.exports = router;

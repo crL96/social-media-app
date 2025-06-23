@@ -55,6 +55,58 @@ async function getFollowingPosts(req, res) {
     }
 }
 
+async function getPost(req, res) {
+    try {
+        const post = await prisma.post.findUnique({
+            where: {
+                id: req.params.postId,
+            },
+            select: {
+                id: true,
+                text: true,
+                timestamp: true,
+                author: {
+                    select: {
+                        username: true,
+                    }
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true,
+                    }
+                },
+                comments: {
+                    select: {
+                        id: true,
+                        text: true,
+                        timestamp: true,
+                        author: {
+                            select: {
+                                username: true,
+                            }
+                        }
+                    },
+                    orderBy: {
+                        timestamp: "desc"
+                    },
+                    //if max query param is included, return max number, else all comments
+                    take: req.query.max ? Number(req.query.max) : undefined,
+                }
+            },
+        })
+        if (post === null) {
+            res.status(404).send("No post found");
+            return;
+        }
+        res.json(post);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getFollowingPosts,
+    getPost,
 }
