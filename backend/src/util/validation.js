@@ -85,8 +85,18 @@ const validateUserProfile = [
         ),
 ];
 
+const validateComment = [
+    body("text")
+        .notEmpty().withMessage("Comment cannot be empty")
+        .isString().withMessage("Comment has to be of type string")
+        .trim()
+        .isLength({ max: 300 })
+        .withMessage("A comment can be a maximum of 300 characters"),
+];
+
 module.exports = {
     validationResult,
     validateUser,
     validateUserProfile,
+    validateComment,
 }
