@@ -27,6 +27,39 @@ async function getCurrentUserProfile(req, res) {
     }
 }
 
+async function getUserProfile(req , res) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                username: req.params.username,
+            },
+            select: {
+                username: true,
+                desc: true,
+                imgUrl: true,
+                _count: {
+                    select: {
+                        posts: true,
+                        followedBy: true,
+                        following: true,
+                    }
+                },
+            },
+        });
+
+        if (user === null) {
+            res.status(404).send("No user found");
+            return;
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getCurrentUserProfile,
+    getUserProfile,
 }

@@ -8,4 +8,10 @@ router.get(
     controller.getCurrentUserProfile
 );
 
+router.get(
+    "/profile/:username",
+    passport.authenticate("jwt", { session: false }),
+    controller.getUserProfile
+);
+
 module.exports = router;
