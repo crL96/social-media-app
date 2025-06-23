@@ -88,7 +88,7 @@ test("sign-up route return 400 if confPassword doesnt match", (done) => {
 });
 
 // LOG IN
-test("login sucess returns 200", (done) => {
+test("login sucess returns 200 and bearer token", (done) => {
     request(app)
         .post("/sign-up")
         .type("application/json")
@@ -108,8 +108,24 @@ test("login sucess returns 200", (done) => {
                     password: "test123",
                 })
                 .expect("Content-Type", /json/)
-                .expect(200, done);
-        })
+                .expect(200)
+                .then(response => {
+                    expect(response.body).toEqual(
+                        expect.objectContaining({
+                            token: expect.any(String),
+                            expires: expect.any(String),
+                        })
+                    )
+                }).catch(err => {
+                    done(err)
+                    return err
+                }).then(err => {
+                    if (!err) {
+                        done();
+                    }
+                })
+                
+            })
 });
 
 test("login unsuccessful attempt returns 401", (done) => {
