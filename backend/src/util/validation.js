@@ -55,7 +55,38 @@ const validateUser = [
         .withMessage("Confirm password and password must match"),
 ];
 
+const validateUserProfile = [
+    body("desc")
+        .optional()
+        .isString().withMessage("Description has to be of type string")
+        .trim()
+        .isLength({ min: 1, max: 200 })
+        .withMessage("Description can be a maximum of 200 characters"),
+
+    body("imgUrl")
+        .optional()
+        .isString().withMessage("Url has to be of type string")
+        .trim()
+        .custom((value) => {
+            const urlEnd = value.split(".").pop();
+            if (
+                urlEnd === "jpg" ||
+                urlEnd === "png" ||
+                urlEnd === "svg" ||
+                urlEnd === "jpeg" ||
+                urlEnd === "webp"
+            ) {
+                return true;
+            }
+            return false;
+        })
+        .withMessage(
+            "Url must reference an image with jpg, png, svg, jpeg or webp format"
+        ),
+];
+
 module.exports = {
     validationResult,
     validateUser,
+    validateUserProfile,
 }

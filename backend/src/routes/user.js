@@ -8,6 +8,12 @@ router.get(
     controller.getCurrentUserProfile
 );
 
+router.put(
+    "/profile",
+    passport.authenticate("jwt", { session: false }),
+    controller.updateUserProfile
+);
+
 router.get(
     "/profile/:username",
     passport.authenticate("jwt", { session: false }),
