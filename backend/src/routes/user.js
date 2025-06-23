@@ -20,4 +20,10 @@ router.get(
     controller.getUserProfile
 );
 
+router.get(
+    "/search/:searchterm",
+    passport.authenticate("jwt", { session: false }),
+    controller.searchUsers
+);
+
 module.exports = router;

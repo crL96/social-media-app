@@ -95,8 +95,30 @@ const updateUserProfile = [
     }
 ];
 
+async function searchUsers(req, res) {
+    try {
+        const users = await prisma.user.findMany({
+            where: {
+                username: {
+                    contains: req.params.searchterm,
+                    mode: "insensitive",
+                }
+            }
+        })
+        res.json({
+            count: users.length,
+            users: users,
+        })
+    console.log(users);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getCurrentUserProfile,
     getUserProfile,
     updateUserProfile,
+    searchUsers,
 }
