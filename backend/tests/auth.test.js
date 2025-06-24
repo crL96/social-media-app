@@ -14,13 +14,11 @@ afterAll(async () => {
 });
 beforeEach(async () => {
     await prisma.user.deleteMany();
-})
-
+});
 
 // SIGN UP
 test("sign-up route returns 400 if no body attached", (done) => {
-    request(app).post("/sign-up")
-        .expect(400, done);
+    request(app).post("/sign-up").expect(400, done);
 });
 
 test("sign-up route return 200 on success", (done) => {
@@ -58,7 +56,7 @@ test("sign-up route return 400 on if username/email is taken", (done) => {
                     confPassword: "test123",
                 })
                 .expect(400, done);
-        })
+        });
 });
 
 test("sign-up route return 400 if invalid email", (done) => {
@@ -109,32 +107,33 @@ test("login sucess returns 200 and bearer token", (done) => {
                 })
                 .expect("Content-Type", /json/)
                 .expect(200)
-                .then(response => {
+                .then((response) => {
                     expect(response.body).toEqual(
                         expect.objectContaining({
                             token: expect.any(String),
                             expires: expect.any(String),
                         })
-                    )
-                }).catch(err => {
-                    done(err)
-                    return err
-                }).then(err => {
+                    );
+                })
+                .catch((err) => {
+                    done(err);
+                    return err;
+                })
+                .then((err) => {
                     if (!err) {
                         done();
                     }
-                })
-                
-            })
+                });
+        });
 });
 
 test("login unsuccessful attempt returns 401", (done) => {
-        request(app)
-            .post("/log-in")
-            .type("application/json")
-            .send({
-                email: "test123@gmail.com",
-                password: "test123",
-            })
-            .expect(401, done);
+    request(app)
+        .post("/log-in")
+        .type("application/json")
+        .send({
+            email: "test123@gmail.com",
+            password: "test123",
+        })
+        .expect(401, done);
 });

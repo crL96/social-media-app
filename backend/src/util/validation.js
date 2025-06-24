@@ -3,10 +3,12 @@ const prisma = require("../config/prisma");
 
 const validateUser = [
     body("username")
-        .notEmpty().withMessage("Username cannot be empty")
+        .notEmpty()
+        .withMessage("Username cannot be empty")
         .trim()
-        .isString().withMessage("Username has to be of type string")
-        .isAlphanumeric("en-US", {ignore: " "})
+        .isString()
+        .withMessage("Username has to be of type string")
+        .isAlphanumeric("en-US", { ignore: " " })
         .withMessage("Username must be alpha-numeric (only numbers and letters")
         .isLength({ min: 1, max: 25 })
         .withMessage("Username must be between 1 and 25 characters")
@@ -17,7 +19,7 @@ const validateUser = [
                     username: {
                         equals: value,
                         mode: "insensitive",
-                    }
+                    },
                 },
             });
             if (user) throw new Error("Username is already in use");
@@ -25,8 +27,10 @@ const validateUser = [
         .withMessage("Username is already in use"),
 
     body("email")
-        .notEmpty().withMessage("Email cannot be empty")
-        .isString().withMessage("Email has to be of type string")
+        .notEmpty()
+        .withMessage("Email cannot be empty")
+        .isString()
+        .withMessage("Email has to be of type string")
         .trim()
         .isEmail()
         .withMessage("Email must be in a valid email format")
@@ -42,8 +46,10 @@ const validateUser = [
         .withMessage("Email is already in use"),
 
     body("password")
-        .notEmpty().withMessage("Password cannot be empty")
-        .isString().withMessage("Password has to be of type string")
+        .notEmpty()
+        .withMessage("Password cannot be empty")
+        .isString()
+        .withMessage("Password has to be of type string")
         .trim()
         .isLength({ min: 1, max: 25 })
         .withMessage("Password must be between 1 and 25 characters"),
@@ -58,14 +64,16 @@ const validateUser = [
 const validateUserProfile = [
     body("desc")
         .optional()
-        .isString().withMessage("Description has to be of type string")
+        .isString()
+        .withMessage("Description has to be of type string")
         .trim()
         .isLength({ min: 1, max: 200 })
         .withMessage("Description can be a maximum of 200 characters"),
 
     body("imgUrl")
         .optional()
-        .isString().withMessage("Url has to be of type string")
+        .isString()
+        .withMessage("Url has to be of type string")
         .trim()
         .custom((value) => {
             const urlEnd = value.split(".").pop();
@@ -87,8 +95,10 @@ const validateUserProfile = [
 
 const validateComment = [
     body("text")
-        .notEmpty().withMessage("Comment cannot be empty")
-        .isString().withMessage("Comment has to be of type string")
+        .notEmpty()
+        .withMessage("Comment cannot be empty")
+        .isString()
+        .withMessage("Comment has to be of type string")
         .trim()
         .isLength({ max: 300 })
         .withMessage("A comment can be a maximum of 300 characters"),
@@ -96,8 +106,10 @@ const validateComment = [
 
 const validatePost = [
     body("text")
-        .notEmpty().withMessage("Post cannot be empty")
-        .isString().withMessage("Post has to be of type string")
+        .notEmpty()
+        .withMessage("Post cannot be empty")
+        .isString()
+        .withMessage("Post has to be of type string")
         .trim()
         .isLength({ max: 500 })
         .withMessage("A post can be a maximum of 500 characters"),
@@ -109,4 +121,4 @@ module.exports = {
     validateUserProfile,
     validateComment,
     validatePost,
-}
+};

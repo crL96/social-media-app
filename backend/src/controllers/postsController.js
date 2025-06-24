@@ -25,7 +25,7 @@ async function getFollowingPosts(req, res) {
             where: {
                 authorId: {
                     in: followList,
-                }
+                },
             },
             select: {
                 id: true,
@@ -34,17 +34,17 @@ async function getFollowingPosts(req, res) {
                 author: {
                     select: {
                         username: true,
-                    }
+                    },
                 },
                 _count: {
                     select: {
                         likes: true,
                         comments: true,
-                    }
+                    },
                 },
             },
             orderBy: {
-                timestamp: "desc"
+                timestamp: "desc",
             },
             //if max query param is included, return max number, else all matches
             take: req.query.max ? Number(req.query.max) : undefined,
@@ -69,13 +69,13 @@ async function getPost(req, res) {
                 author: {
                     select: {
                         username: true,
-                    }
+                    },
                 },
                 _count: {
                     select: {
                         likes: true,
                         comments: true,
-                    }
+                    },
                 },
                 comments: {
                     select: {
@@ -85,17 +85,17 @@ async function getPost(req, res) {
                         author: {
                             select: {
                                 username: true,
-                            }
-                        }
+                            },
+                        },
                     },
                     orderBy: {
-                        timestamp: "desc"
+                        timestamp: "desc",
                     },
                     //if max query param is included, return max number, else all comments
                     take: req.query.max ? Number(req.query.max) : undefined,
-                }
+                },
             },
-        })
+        });
         if (post === null) {
             res.status(404).send("No post found");
             return;
@@ -122,17 +122,16 @@ createPost = [
         try {
             await prisma.post.create({
                 data: {
-                   text: req.body.text,
-                   authorId: req.user.id, 
-                }
+                    text: req.body.text,
+                    authorId: req.user.id,
+                },
             });
             res.status(200).send("Post created");
         } catch (err) {
             console.log(err.message);
             res.status(500).send("Internal server error");
         }
-    
-    }
+    },
 ];
 
 async function deletePost(req, res) {
@@ -140,16 +139,16 @@ async function deletePost(req, res) {
         //Delete post and all its comments
         const deleteComments = prisma.comment.deleteMany({
             where: {
-                postId: req.params.postId
-            }
+                postId: req.params.postId,
+            },
         });
         const deletePost = prisma.post.delete({
             where: {
-                id: req.params.postId
+                id: req.params.postId,
             },
         });
         await prisma.$transaction([deleteComments, deletePost]);
-        res.status(200).send("Post and all of its comments have been deleted")
+        res.status(200).send("Post and all of its comments have been deleted");
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Internal server error");
@@ -158,7 +157,9 @@ async function deletePost(req, res) {
 
 async function editPost(req, res) {
     if (!req.body || !req.body.text) {
-        res.status(400).send("Bad request: Include post text/content as 'text' in req body");
+        res.status(400).send(
+            "Bad request: Include post text/content as 'text' in req body"
+        );
         return;
     }
     try {
@@ -187,9 +188,9 @@ async function likePost(req, res) {
                 likes: {
                     connect: {
                         id: req.user.id,
-                    }
-                }
-            }
+                    },
+                },
+            },
         });
         res.status(200).send("Post liked");
     } catch (err) {
@@ -227,4 +228,4 @@ module.exports = {
     editPost,
     likePost,
     unlikePost,
-}
+};

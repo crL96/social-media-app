@@ -24,15 +24,15 @@ async function main() {
                 posts: {
                     create: [
                         {
-                           text: faker.lorem.paragraph({ min: 1, max: 3 }) 
+                            text: faker.lorem.paragraph({ min: 1, max: 3 }),
                         },
                         {
-                           text: faker.lorem.paragraph({ min: 1, max: 3 }) 
-                        }
-                    ]
-                }
-            }
-        })
+                            text: faker.lorem.paragraph({ min: 1, max: 3 }),
+                        },
+                    ],
+                },
+            },
+        });
     }
 
     // Add comments and likes to some of the posts
@@ -40,46 +40,50 @@ async function main() {
         const post = await prisma.post.findFirst({
             where: {
                 id: {
-                    startsWith: String(Math.floor(Math.random() * 16).toString(16))
-                }
-            }
-        })
-        if (!post) continue; 
+                    startsWith: String(
+                        Math.floor(Math.random() * 16).toString(16)
+                    ),
+                },
+            },
+        });
+        if (!post) continue;
 
         const user = await prisma.user.findFirst({
             where: {
                 id: {
-                    startsWith: String(Math.floor(Math.random() * 16).toString(16))
-                }
-            }
-        })
-        if (!user) continue; 
+                    startsWith: String(
+                        Math.floor(Math.random() * 16).toString(16)
+                    ),
+                },
+            },
+        });
+        if (!user) continue;
 
         await prisma.post.update({
             where: {
-                id: post.id
+                id: post.id,
             },
             data: {
                 likes: {
                     connect: {
                         id: user.id,
-                    }
-                }
-            }
-        })
+                    },
+                },
+            },
+        });
 
         await prisma.comment.create({
             data: {
                 text: faker.lorem.paragraph(1),
                 authorId: user.id,
-                postId: post.id
-            }
-        })
+                postId: post.id,
+            },
+        });
     }
 }
 
 main()
-    .catch(err => {
+    .catch((err) => {
         console.log(err);
         process.exit(1);
     })

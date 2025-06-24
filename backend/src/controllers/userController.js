@@ -17,10 +17,10 @@ async function getCurrentUserProfile(req, res) {
                         posts: true,
                         followedBy: true,
                         following: true,
-                    }
+                    },
                 },
             },
-        })
+        });
         res.json(user);
     } catch (err) {
         console.log(err.message);
@@ -28,7 +28,7 @@ async function getCurrentUserProfile(req, res) {
     }
 }
 
-async function getUserProfile(req , res) {
+async function getUserProfile(req, res) {
     try {
         const user = await prisma.user.findUnique({
             where: {
@@ -43,7 +43,7 @@ async function getUserProfile(req , res) {
                         posts: true,
                         followedBy: true,
                         following: true,
-                    }
+                    },
                 },
             },
         });
@@ -74,10 +74,12 @@ const updateUserProfile = [
 
         try {
             if (!req.body || !(req.body.desc || req.body.imgUrl)) {
-                res.status(400).send("Include either one or both of 'desc' or 'imgUrl' in body")
+                res.status(400).send(
+                    "Include either one or both of 'desc' or 'imgUrl' in body"
+                );
                 return;
             }
-    
+
             const user = await prisma.user.update({
                 where: {
                     id: req.user.id,
@@ -85,14 +87,14 @@ const updateUserProfile = [
                 data: {
                     desc: req.body.desc,
                     imgUrl: req.body.imgUrl,
-                }
-            })
+                },
+            });
             res.status(200).send("User profile updated");
         } catch (err) {
             console.log(err.message);
             res.status(500).send("Internal server error");
         }
-    }
+    },
 ];
 
 async function searchUsers(req, res) {
@@ -102,14 +104,14 @@ async function searchUsers(req, res) {
                 username: {
                     contains: req.params.searchterm,
                     mode: "insensitive",
-                }
-            }
-        })
+                },
+            },
+        });
         res.json({
             count: users.length,
             users: users,
-        })
-    console.log(users);
+        });
+        console.log(users);
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Internal server error");
@@ -121,4 +123,4 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     searchUsers,
-}
+};
