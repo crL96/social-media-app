@@ -47,7 +47,7 @@ async function unfollowUser(req, res) {
                         username: req.params.username,
                     },
                 },
-            }
+            },
         });
         res.status(200).send("Unfollowed " + req.params.username);
     } catch (err) {
@@ -60,7 +60,36 @@ async function unfollowUser(req, res) {
     }
 }
 
+async function getFollowList(req, res) {
+    try {
+        const list = await prisma.user.findUnique({
+            where: {
+                id: req.user.id,
+            },
+            select: {
+                following: {
+                    select: {
+                        username: true,
+                        imgUrl: true,
+                    },
+                },
+                followedBy: {
+                    select: {
+                        username: true,
+                        imgUrl: true,
+                    },
+                },
+            },
+        });
+        res.json(list);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     followUser,
     unfollowUser,
+    getFollowList,
 };
