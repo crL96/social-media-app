@@ -9,6 +9,7 @@ router.get("/", controller.getFollowingPosts);
 router.post("/", controller.createPost);
 
 router.get("/:postId", controller.getPost);
+router.delete("/:postId", controller.deletePost);
 
 router.use("/:postId/comments", commentsRouter);
 

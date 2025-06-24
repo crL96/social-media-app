@@ -135,8 +135,30 @@ createPost = [
     }
 ];
 
+async function deletePost(req, res) {
+    try {
+        //Delete post and all its comments
+        const deleteComments = prisma.comment.deleteMany({
+            where: {
+                postId: req.params.postId
+            }
+        });
+        const deletePost = prisma.post.delete({
+            where: {
+                id: req.params.postId
+            },
+        });
+        await prisma.$transaction([deleteComments, deletePost]);
+        res.status(200).send("Post and all of its comments have been deleted")
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getFollowingPosts,
     getPost,
     createPost,
+    deletePost,
 }
