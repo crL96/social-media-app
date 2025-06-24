@@ -156,9 +156,31 @@ async function deletePost(req, res) {
     }
 }
 
+async function editPost(req, res) {
+    if (!req.body || !req.body.text) {
+        res.status(400).send("Bad request: Include post text/content as 'text' in req body");
+        return;
+    }
+    try {
+        await prisma.post.update({
+            where: {
+                id: req.params.postId,
+            },
+            data: {
+                text: req.body.text,
+            },
+        });
+        res.status(200).send("Post updated");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getFollowingPosts,
     getPost,
     createPost,
     deletePost,
+    editPost,
 }

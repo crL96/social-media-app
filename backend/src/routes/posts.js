@@ -11,6 +11,7 @@ router.post("/", controller.createPost);
 
 router.get("/:postId", controller.getPost);
 router.delete("/:postId", auth.checkPostOwnership, controller.deletePost);
+router.put("/:postId", auth.checkPostOwnership, controller.editPost);
 
 router.use("/:postId/comments", commentsRouter);
 
