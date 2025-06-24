@@ -29,6 +29,21 @@ const createComment = [
     },
 ];
 
+async function deleteComment(req, res) {
+    try {
+        const comment = await prisma.comment.delete({
+            where: {
+                id: req.params.commentId,
+            },
+        });
+        res.status(200).send("Comment deleted");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     createComment,
+    deleteComment,
 };

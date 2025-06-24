@@ -3,4 +3,6 @@ const controller = require("../controllers/commentsController");
 
 router.post("/", controller.createComment);
 
+router.delete("/:commentId", controller.deleteComment);
+
 module.exports = router;
