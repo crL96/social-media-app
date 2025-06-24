@@ -34,6 +34,7 @@ async function getFollowingPosts(req, res) {
                 author: {
                     select: {
                         username: true,
+                        imgUrl: true,
                     },
                 },
                 _count: {
@@ -85,6 +86,7 @@ async function getPost(req, res) {
                         author: {
                             select: {
                                 username: true,
+                                imgUrl: true,
                             },
                         },
                     },
