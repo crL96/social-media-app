@@ -177,10 +177,54 @@ async function editPost(req, res) {
     }
 }
 
+async function likePost(req, res) {
+    try {
+        await prisma.post.update({
+            where: {
+                id: req.params.postId,
+            },
+            data: {
+                likes: {
+                    connect: {
+                        id: req.user.id,
+                    }
+                }
+            }
+        });
+        res.status(200).send("Post liked");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
+async function unlikePost(req, res) {
+    try {
+        await prisma.post.update({
+            where: {
+                id: req.params.postId,
+            },
+            data: {
+                likes: {
+                    disconnect: {
+                        id: req.user.id,
+                    },
+                },
+            },
+        });
+        res.status(200).send("Post unliked");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getFollowingPosts,
     getPost,
     createPost,
     deletePost,
     editPost,
+    likePost,
+    unlikePost,
 }

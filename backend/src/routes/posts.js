@@ -13,6 +13,9 @@ router.get("/:postId", controller.getPost);
 router.delete("/:postId", auth.checkPostOwnership, controller.deletePost);
 router.put("/:postId", auth.checkPostOwnership, controller.editPost);
 
+router.post("/:postId/like", controller.likePost);
+router.delete("/:postId/like", controller.unlikePost);
+
 router.use("/:postId/comments", commentsRouter);
 
 module.exports = router;
