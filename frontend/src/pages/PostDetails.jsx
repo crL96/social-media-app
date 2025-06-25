@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 import Post from "../components/post/Post";
+import Header from "../components/header/Header";
 
 function PostDetails() {
     const { postId } = useParams();
@@ -34,11 +35,14 @@ function PostDetails() {
     }, [navigate, postId]);
 
     return (
-        <>
-            {post ? 
-            <Post data={post} />
-            : <span className="loader"></span>
-            }
+        <>  
+            <Header />
+            <main>
+                {post ?
+                <Post data={post} />
+                : <span className="loader"></span>
+                }
+            </main>
         </>
     );
 }

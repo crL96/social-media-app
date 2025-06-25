@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 import styles from "./forms.module.css";
+import Header from "../components/header/Header";
 
 function Signup() {
     const [errorMessages, setErrorMessages] = useState([]);
@@ -52,27 +53,30 @@ function Signup() {
 
     return (
         <>
-            <ul className={styles.errorList}>
-                {errorMessages.map((error, index) => {
-                    return (
-                        <li className={styles.errorMessage} key={index}>
-                            {error.msg}
-                        </li>
-                    );
-                })}
-            </ul>
-            <form className={styles.form} onSubmit={handleSignup}>
-                <legend>Sign Up</legend>
-                <label htmlFor="username">Username: </label>
-                <input type="text" name="username" id="username" required />
-                <label htmlFor="email">Email: </label>
-                <input type="email" name="email" id="email" required />
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" required />
-                <label htmlFor="confPassword">Confirm Password: </label>
-                <input type="password" name="confPassword" id="confPassword" required />
-                <button type="submit">Sign Up</button>
-            </form>
+            <Header />
+            <main>
+                <ul className={styles.errorList}>
+                    {errorMessages.map((error, index) => {
+                        return (
+                            <li className={styles.errorMessage} key={index}>
+                                {error.msg}
+                            </li>
+                        );
+                    })}
+                </ul>
+                <form className={styles.form} onSubmit={handleSignup}>
+                    <legend>Sign Up</legend>
+                    <label htmlFor="username">Username: </label>
+                    <input type="text" name="username" id="username" required />
+                    <label htmlFor="email">Email: </label>
+                    <input type="email" name="email" id="email" required />
+                    <label htmlFor="password">Password: </label>
+                    <input type="password" name="password" id="password" required />
+                    <label htmlFor="confPassword">Confirm Password: </label>
+                    <input type="password" name="confPassword" id="confPassword" required />
+                    <button type="submit">Sign Up</button>
+                </form>
+            </main>
         </>
     );
 }

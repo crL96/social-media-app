@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 const API_URL = import.meta.env.VITE_API_URL;
 import Post from "./components/post/Post";
+import Header from "./components/header/Header";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -33,9 +34,12 @@ function App() {
 
     return (
         <>
-            {posts.map((post) => {
-                return <Post key={post.id} data={post} />;
-            })}
+            <Header />
+            <main>
+                {posts.map((post) => {
+                    return <Post key={post.id} data={post} />;
+                })}
+            </main>
         </>
     );
 }

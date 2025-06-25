@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./forms.module.css";
 const API_URL = import.meta.env.VITE_API_URL;
+import Header from "../components/header/Header";
 
 function Login() {
     const [displayMsg, setDisplayMsg] = useState(false);
@@ -36,19 +37,22 @@ function Login() {
 
     return (
         <>
-            {displayMsg ? (
-                <p className={styles.errorMessage}>
-                    Incorrect email and/or password
-                </p>
-            ) : null}
-            <form className={styles.form} onSubmit={handleLogin}>
-                <legend>Log In</legend>
-                <label htmlFor="email">Email: </label>
-                <input type="email" name="email" id="email" required />
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" required />
-                <button type="submit">Log in</button>
-            </form>
+            <Header />
+            <main>
+                {displayMsg ? (
+                    <p className={styles.errorMessage}>
+                        Incorrect email and/or password
+                    </p>
+                ) : null}
+                <form className={styles.form} onSubmit={handleLogin}>
+                    <legend>Log In</legend>
+                    <label htmlFor="email">Email: </label>
+                    <input type="email" name="email" id="email" required />
+                    <label htmlFor="password">Password: </label>
+                    <input type="password" name="password" id="password" required />
+                    <button type="submit">Log in</button>
+                </form>
+            </main>
         </>
     );
 }
