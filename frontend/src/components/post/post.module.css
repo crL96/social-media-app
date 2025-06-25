@@ -22,6 +22,16 @@
 .footer > div {
     display: flex;
     gap: 1rem;
+
+    align-items: center;
+}
+
+.likeIcon {
+    height: 1.7rem;
+}
+
+.likeIcon:hover {
+    cursor: pointer;
 }
 
 .header {
