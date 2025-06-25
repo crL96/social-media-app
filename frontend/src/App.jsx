@@ -9,9 +9,9 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function fetchPosts(n) {
+        async function fetchPosts(n, nComments) {
             try {
-                const res = await fetch(`${API_URL}/posts?max=${n}`, {
+                const res = await fetch(`${API_URL}/posts?max=${n}&comments=${nComments}`, {
                     headers: {
                         "Content-Type": "Application/json",
                         authorization: localStorage.getItem("jwt-token"),
@@ -28,7 +28,7 @@ function App() {
                 console.log(err);
             }
         }
-        fetchPosts(15);
+        fetchPosts(15, 2);
     }, [navigate]);
 
     return (

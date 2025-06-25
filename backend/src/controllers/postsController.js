@@ -43,6 +43,24 @@ async function getFollowingPosts(req, res) {
                         comments: true,
                     },
                 },
+                comments: {
+                    select: {
+                        id: true,
+                        text: true,
+                        timestamp: true,
+                        author: {
+                            select: {
+                                username: true,
+                                imgUrl: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        timestamp: "desc",
+                    },
+                    //if comments query param is included, return max number, else no comments
+                    take: req.query.comments ? Number(req.query.comments) : 0,
+                },
             },
             orderBy: {
                 timestamp: "desc",
