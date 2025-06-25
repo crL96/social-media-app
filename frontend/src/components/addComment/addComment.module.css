@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 0.5rem;
+}
+
+.div {
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}

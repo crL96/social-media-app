@@ -1,11 +1,21 @@
+import { useState } from "react";
 import styles from "./post.module.css";
 import userIcon from "../../assets/user-icon.png";
 import Comment from "../comment/Comment";
+import AddComment from "../addComment/AddComment";
 
 function Post({ data }) {
+    const [showAddComment, setShowAddComment] = useState(false);
+
     const formattedTime = new Date(data.timestamp).toLocaleString("en-GB");
 
-    console.log(data);
+    function toggleShowAddComment() {
+        if (showAddComment) {
+            setShowAddComment(false);
+        } else {
+            setShowAddComment(true);
+        }
+    }
 
     return (
         <div className={[styles.post, "post"].join(" ")}>
@@ -24,8 +34,15 @@ function Post({ data }) {
             <div className={styles.comments}>
                 <div className={styles.commentsHeader}>
                     <h3>Comments</h3>
-                    <button>Add a comment</button>
+                    <button onClick={toggleShowAddComment}>
+                        {showAddComment ? ("Hide") : ("Add a comment")}
+                    </button>
                 </div>
+                {/* Show Add comment box only if showAddComment true */}
+                {showAddComment ? (
+                    <AddComment postId={data.id}/>
+                ) : null}
+                
                 {data.comments.map((comment) => {
                     return (
                         <Comment key={comment.id} data={comment} />
