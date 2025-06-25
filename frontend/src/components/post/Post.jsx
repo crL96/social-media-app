@@ -32,28 +32,31 @@ function Post({ data }) {
                 </div>
                 <p className={styles.timestamp}>{formattedTime}</p>
             </div>
-            <div className={styles.comments}>
-                <div className={styles.commentsHeader}>
-                    <h3>Comments</h3>
-                    <button onClick={toggleShowAddComment}>
-                        {showAddComment ? ("Hide") : ("Add a comment")}
-                    </button>
+            {/* If comments is undefined, this means we dont want to render comment content */}
+            {data.comments === undefined ? null : (
+                <div className={styles.comments}>
+                    <div className={styles.commentsHeader}>
+                        <h3>Comments</h3>
+                        <button onClick={toggleShowAddComment}>
+                            {showAddComment ? ("Hide") : ("Add a comment")}
+                        </button>
+                    </div>
+                    {/* Show Add comment box only if showAddComment true */}
+                    {showAddComment ? (
+                        <AddComment postId={data.id}/>
+                    ) : null}
+                    
+                    {data.comments.map((comment) => {
+                        return (
+                            <Comment key={comment.id} data={comment} />
+                        );
+                    })}
+                    {/* If there are more comments than are displayed, display link */}
+                    {data._count.comments > data.comments.length ? (
+                        <Link to={`/post/${data.id}`}>Show all comments</Link>
+                    ) : null}
                 </div>
-                {/* Show Add comment box only if showAddComment true */}
-                {showAddComment ? (
-                    <AddComment postId={data.id}/>
-                ) : null}
-                
-                {data.comments.map((comment) => {
-                    return (
-                        <Comment key={comment.id} data={comment} />
-                    );
-                })}
-                {/* If there are more comments than are displayed, display link */}
-                {data._count.comments > data.comments.length ? (
-                    <Link to={`/post/${data.id}`}>Show all comments</Link>
-                ) : null}
-            </div>
+            )}
         </div>
     );
 }
