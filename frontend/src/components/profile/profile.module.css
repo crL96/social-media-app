@@ -25,6 +25,16 @@
     border-radius: 50%;
 }
 
+.profileUpper > div {
+    width: 100%;
+}
+
+.profileUpper > div > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .profileLower {
     display: flex;
     justify-content: space-between;
