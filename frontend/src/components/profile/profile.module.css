@@ -1,0 +1,32 @@
+.profileContainer {
+    border: 2px solid white;
+    border-radius: 0.5rem;
+
+    text-align: start;
+
+    padding: 1rem;
+}
+
+.profileUpper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    padding-bottom: 1rem;
+    border-bottom: 1px solid white;
+}
+
+.profileUpper > img {
+    max-width: 150px;
+    max-height: 150px;
+    aspect-ratio: 1/1;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profileLower {
+    display: flex;
+    justify-content: space-between;
+}
+

@@ -1,0 +1,9 @@
+.main {
+    max-width: 70ch;
+    margin: 0 auto;
+}
+
+.main > h2 {
+    font-size: 2rem;
+    text-decoration: underline;
+}
