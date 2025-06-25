@@ -25,6 +25,7 @@ function Header() {
                 {signedIn ? (
                     <>
                         <Link to="/">Home</Link>
+                        <Link to="/new-post">New Post</Link>
                         <Link to="/login" onClick={handleLogout}>Log Out</Link>
                     </>
                 ) : (
