@@ -39,7 +39,7 @@ function PostDetails() {
             <Header />
             <main>
                 {post ?
-                <Post data={post} />
+                <Post data={post} hideSeeMore={true}/>
                 : <span className="loader"></span>
                 }
             </main>

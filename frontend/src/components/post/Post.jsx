@@ -8,7 +8,7 @@ import AddComment from "../addComment/AddComment";
 import { Link } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 
-function Post({ data }) {
+function Post({ data, hideSeeMore }) {
     const [showAddComment, setShowAddComment] = useState(false);
     const [liked, setLiked] = useState(data.liked);
 
@@ -43,10 +43,18 @@ function Post({ data }) {
     return (
         <div className={[styles.post, "post"].join(" ")}>
             <div className={styles.header}>
-                <img src={data.author.imgUrl ? data.author.imgUrl : userIcon} alt="User icon" />
-                <Link className="profileLink" to={`/profile/${data.author.username}`}>
-                    <h2>{data.author.username}</h2>
-                </Link>
+                <div>
+                    <img
+                        src={data.author.imgUrl ? data.author.imgUrl : userIcon}
+                        alt="User icon"
+                    />
+                    <Link className="profileLink" to={`/profile/${data.author.username}`}>
+                        <h2>{data.author.username}</h2>
+                    </Link>
+                </div>
+                {hideSeeMore ? null :
+                    (<Link to={`/post/${data.id}`}>See More</Link>)
+                }
             </div>
             <p>{data.text}</p>
             <div className={styles.footer}>
