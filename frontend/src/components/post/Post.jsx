@@ -3,6 +3,7 @@ import styles from "./post.module.css";
 import userIcon from "../../assets/user-icon.png";
 import Comment from "../comment/Comment";
 import AddComment from "../addComment/AddComment";
+import { Link } from "react-router-dom";
 
 function Post({ data }) {
     const [showAddComment, setShowAddComment] = useState(false);
@@ -48,6 +49,10 @@ function Post({ data }) {
                         <Comment key={comment.id} data={comment} />
                     );
                 })}
+                {/* If there are more comments than are displayed, display link */}
+                {data._count.comments > data.comments.length ? (
+                    <Link to={`/post/${data.id}`}>Show all comments</Link>
+                ) : null}
             </div>
         </div>
     );
