@@ -62,7 +62,16 @@ async function getUserProfile(req, res) {
                                 comments: true,
                             },
                         },
-                    }
+                        // Include to check if current user has liked
+                        likes: {
+                            select: {
+                                id: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        timestamp: "desc",
+                    },
                 },
                 //Include to be able to check if current user is following or not
                 followedBy: {
@@ -85,6 +94,16 @@ async function getUserProfile(req, res) {
             user.following = false;
         }
         delete user.followedBy;
+
+        // For each post check if current user has liked, then remove likes list before response
+        user.posts.map((post) => {
+            if (post.likes.some(user => user.id === req.user.id)) {
+                post.liked = true;
+            } else {
+                post.liked = false;
+            }
+            delete post.likes;
+        });
 
         res.json(user);
     } catch (err) {
