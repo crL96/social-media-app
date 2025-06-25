@@ -63,14 +63,28 @@ async function getUserProfile(req, res) {
                             },
                         },
                     }
-                }
+                },
+                //Include to be able to check if current user is following or not
+                followedBy: {
+                    select: {
+                        id: true,
+                    },
+                },
             },
         });
-
+        
         if (user === null) {
             res.status(404).send("No user found");
             return;
         }
+
+        // Check if current user is following, then remove follower list before res
+        if (user.followedBy.some(follower => follower.id === req.user.id)) {
+            user.following = true;
+        } else {
+            user.following = false;
+        }
+        delete user.followedBy;
 
         res.json(user);
     } catch (err) {
