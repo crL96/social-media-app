@@ -38,3 +38,17 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+.comments > * {
+    margin-bottom: 1rem;
+}
+
+.commentsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commentsHeader > button {
+    height:fit-content;
+}
