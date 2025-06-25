@@ -1,0 +1,38 @@
+.profileCard {
+    border: 2px solid white;
+    border-radius: 0.5rem;
+
+    text-align: start;
+
+    padding: 1rem;
+    max-width: 40ch;
+
+    color: white;
+}
+
+.profileUpper  > img {
+    max-width: 80px;
+    max-height: 80px;
+    aspect-ratio: 1/1;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profileUpper {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    padding-bottom: 1rem;
+    border-bottom: 1px solid white;
+}
+
+.profileLower {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
