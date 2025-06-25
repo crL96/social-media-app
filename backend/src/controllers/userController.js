@@ -158,12 +158,26 @@ async function searchUsers(req, res) {
                     mode: "insensitive",
                 },
             },
+            select: {
+                username: true,
+                desc: true,
+                imgUrl: true,
+                _count: {
+                    select: {
+                        followedBy: true,
+                    },
+                },
+            },
+            orderBy: {
+                followedBy: {
+                    _count: "desc"
+                }
+            }
         });
         res.json({
             count: users.length,
             users: users,
         });
-        console.log(users);
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Internal server error");
