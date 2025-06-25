@@ -45,6 +45,25 @@ async function getUserProfile(req, res) {
                         following: true,
                     },
                 },
+                posts: {
+                    select: {
+                        id: true,
+                        text: true,
+                        timestamp: true,
+                        author: {
+                            select: {
+                                username: true,
+                                imgUrl: true,
+                            },
+                        },
+                        _count: {
+                            select: {
+                                likes: true,
+                                comments: true,
+                            },
+                        },
+                    }
+                }
             },
         });
 
