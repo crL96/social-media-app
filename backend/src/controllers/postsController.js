@@ -61,6 +61,12 @@ async function getFollowingPosts(req, res) {
                     //if comments query param is included, return max number, else no comments
                     take: req.query.comments ? Number(req.query.comments) : 0,
                 },
+                // Include to check if current user has liked
+                likes: {
+                    select: {
+                        id: true,
+                    },
+                },
             },
             orderBy: {
                 timestamp: "desc",
@@ -68,6 +74,17 @@ async function getFollowingPosts(req, res) {
             //if max query param is included, return max number, else all matches
             take: req.query.max ? Number(req.query.max) : undefined,
         });
+
+        // For each post check if current user has liked, then remove likes list before response
+        posts.map((post) => {
+            if (post.likes.some(user => user.id === req.user.id)) {
+                post.liked = true;
+            } else {
+                post.liked = false;
+            }
+            delete post.likes;
+        });
+
         res.json(posts);
     } catch (err) {
         console.log(err.message);
@@ -115,12 +132,27 @@ async function getPost(req, res) {
                     //if max query param is included, return max number, else all comments
                     take: req.query.max ? Number(req.query.max) : undefined,
                 },
+                // Include to check if current user has liked
+                likes: {
+                    select: {
+                        id: true,
+                    },
+                },
             },
         });
         if (post === null) {
             res.status(404).send("No post found");
             return;
         }
+
+        // Check if current user has liked, then remove likes list before response
+        if (post.likes.some(user => user.id === req.user.id)) {
+            post.liked = true;
+        } else {
+            post.liked = false;
+        }
+        delete post.likes;
+
         res.json(post);
     } catch (err) {
         console.log(err.message);

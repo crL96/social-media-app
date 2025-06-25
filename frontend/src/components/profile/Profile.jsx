@@ -9,7 +9,7 @@ function Profile({ user }) {
     async function toggleFollow() {
         const res = await fetch(`${API_URL}/user/follow/${user.username}`, {
             // DELETE to unfollow, POST to follow
-            method: user.following ? "DELETE" : "POST",
+            method: following ? "DELETE" : "POST",
             headers: {
                 authorization: localStorage.getItem("jwt-token"),
             },
