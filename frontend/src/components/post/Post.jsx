@@ -22,7 +22,9 @@ function Post({ data }) {
         <div className={[styles.post, "post"].join(" ")}>
             <div className={styles.header}>
                 <img src={data.author.imgUrl ? data.author.imgUrl : userIcon} alt="User icon" />
-                <h2>{data.author.username}</h2>
+                <Link className="profileLink" to={`/profile/${data.author.username}`}>
+                    <h2>{data.author.username}</h2>
+                </Link>
             </div>
             <p>{data.text}</p>
             <div className={styles.footer}>

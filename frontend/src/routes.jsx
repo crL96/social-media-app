@@ -3,6 +3,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import PostDetails from "./pages/PostDetails";
 import NewPost from "./pages/NewPost";
+import ProfileDetails from "./pages/ProfileDetails";
 
 const routes = [
     {
@@ -23,7 +24,11 @@ const routes = [
     },
     {
         path: "new-post",
-        element: <NewPost />
+        element: <NewPost />,
+    },
+    {
+        path: "profile/:username",
+        element: <ProfileDetails />,
     },
 ];
 
