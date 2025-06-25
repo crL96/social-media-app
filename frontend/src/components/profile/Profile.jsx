@@ -15,6 +15,11 @@ function Profile({ user }) {
             },
         });
         if (res.status === 200) {
+            if (following) {
+                user._count.followedBy--;
+            } else {
+                user._count.followedBy++;
+            }
             setFollowing(!following);
         }
     }
