@@ -65,6 +65,7 @@ async function loginUser(req, res) {
         res.json({
             token: "Bearer " + signedToken,
             expires: expiresIn,
+            username: user.username,
         });
     } catch (err) {
         console.log(err.message);

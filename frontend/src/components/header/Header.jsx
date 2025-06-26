@@ -16,6 +16,7 @@ function Header() {
 
     function handleLogout() {
         localStorage.removeItem("jwt-token");
+        localStorage.removeItem("currentUser");
         setSignedIn(false);
     }
 

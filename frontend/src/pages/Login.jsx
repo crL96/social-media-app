@@ -26,6 +26,7 @@ function Login() {
                 setDisplayMsg(false);
                 const resPayload = await res.json();
                 localStorage.setItem("jwt-token", resPayload.token);
+                localStorage.setItem("currentUser", resPayload.username);
                 navigate("/");
             } else {
                 setDisplayMsg(true);
