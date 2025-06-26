@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./followList.module.css";
 import userIcon from "../../assets/user-icon.png";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -7,15 +7,21 @@ const API_URL = import.meta.env.VITE_API_URL;
 function FollowList({ select, closeDialog }) {
     const [users, setUsers] = useState(null);
     const [selectedKey, setSelectedKey] = useState(select ? select : "following");
+    const { username } = useParams();
 
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const res = await fetch(`${API_URL}/user/follow`, {
-                    headers: {
-                        authorization: localStorage.getItem("jwt-token"),
-                    },
-                });
+                const res = await fetch(
+                    username
+                        ? `${API_URL}/user/follow/${username}`
+                        : `${API_URL}/user/follow`,
+                    {
+                        headers: {
+                            authorization: localStorage.getItem("jwt-token"),
+                        },
+                    }
+                );
                 if (res.status === 200) {
                     const data = await res.json();
                     setUsers(data);
@@ -25,7 +31,7 @@ function FollowList({ select, closeDialog }) {
             }
         }
         fetchUsers();
-    }, []);
+    }, [username]);
     
     function handleSelectFollowers() {
         setSelectedKey("followedBy");
