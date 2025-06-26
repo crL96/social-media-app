@@ -42,7 +42,7 @@ function App() {
                         return <Post key={post.id} data={post} />;
                     })}
                 </main>
-                <ProfileSuggestions />
+                <ProfileSuggestions nProfiles={5}/>
             </div>
         </>
     );

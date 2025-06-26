@@ -4,7 +4,7 @@ import userIcon from "../../assets/user-icon.png";
 import styles from "./profileSuggestions.module.css";
 import { Link } from "react-router-dom";
 
-function ProfileSuggestions() {
+function ProfileSuggestions({ nProfiles }) {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -23,8 +23,8 @@ function ProfileSuggestions() {
                 console.log(err);
             }
         }
-        fetchUsers(4);
-    }, []);
+        fetchUsers(nProfiles);
+    }, [nProfiles]);
 
     return (
         <div className="profileSuggestions">
