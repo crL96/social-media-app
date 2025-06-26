@@ -58,7 +58,7 @@ function FollowList({ select, closeDialog }) {
             <div className={styles.followList}>
                 {users[selectedKey].map((user) => {
                     return (
-                        <div key={user.username} className={styles.user}>
+                        <div onClick={closeDialog} key={user.username} className={styles.user}>
                             <Link to={`/profile/${user.username}`}>
                                 <img
                                     src={
