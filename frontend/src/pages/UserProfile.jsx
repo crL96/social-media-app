@@ -4,12 +4,14 @@ const API_URL = import.meta.env.VITE_API_URL;
 import Header from "../components/header/Header";
 import Post from "../components/post/Post";
 import FollowList from "../components/followList/FollowList";
+import EditProfile from "../components/editProfile/EditProfile";
 import styles from "./userProfile.module.css";
 import userIcon from "../assets/user-icon.png";
 
 function UserProfile() {
     const [user, setUser] = useState(null);
     const [showFollowList, setShowFollowList] = useState([false, "following"]);
+    const [showEditProfile, setShowEditProfile] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,6 +46,10 @@ function UserProfile() {
         setShowFollowList([false, "following"]);
     }
 
+    function toggleEditProfile() {
+        setShowEditProfile(!showEditProfile);
+    }
+
     if (user === null) {
         return (
             <>
@@ -56,6 +62,9 @@ function UserProfile() {
     return (
         <>
             <Header />
+            {showEditProfile ? (
+                <EditProfile user={user} closeFn={toggleEditProfile} />
+            ) : null }
             <main className={styles.main}>
 
                 <div className={styles.profileContainer}>
@@ -64,7 +73,7 @@ function UserProfile() {
                         <div>
                             <div>
                                 <h2>{user.username}</h2>
-                                <button className={styles.editBtn}>Edit</button>
+                                <button onClick={toggleEditProfile} className={styles.editBtn}>Edit</button>
                             </div>
                             <p>{user.desc}</p>
                         </div>

@@ -1,0 +1,37 @@
+.dialog {
+    position: fixed;
+    top: 10vh;
+
+    border-radius: 0.5rem;
+    min-width: 300px;
+}
+
+.dialog > form {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 320px;
+    max-width: 70ch;
+    padding: 2rem;
+}
+
+.form > input,
+.form > select,
+.form > button {
+    margin-bottom: 0.5rem;
+}
+
+.errorList {
+    text-align: center;
+    list-style: none;
+    margin-bottom: 1rem;
+
+    padding-left: 0;
+
+    color: red;
+}
+
+.dialog > form > input,
+.dialog > form > textarea {
+    line-height: 1.5;
+}
