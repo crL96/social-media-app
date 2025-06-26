@@ -19,8 +19,47 @@ async function getCurrentUserProfile(req, res) {
                         following: true,
                     },
                 },
+                posts: {
+                    select: {
+                        id: true,
+                        text: true,
+                        timestamp: true,
+                        author: {
+                            select: {
+                                username: true,
+                                imgUrl: true,
+                            },
+                        },
+                        _count: {
+                            select: {
+                                likes: true,
+                                comments: true,
+                            },
+                        },
+                        // Include to check if current user has liked
+                        likes: {
+                            select: {
+                                id: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        timestamp: "desc",
+                    },
+                },
             },
         });
+
+        // For each post check if current user has liked, then remove likes list before response
+        user.posts.map((post) => {
+            if (post.likes.some(user => user.id === req.user.id)) {
+                post.liked = true;
+            } else {
+                post.liked = false;
+            }
+            delete post.likes;
+        });
+
         res.json(user);
     } catch (err) {
         console.log(err.message);
