@@ -67,7 +67,7 @@ const validateUserProfile = [
         .isString()
         .withMessage("Description has to be of type string")
         .trim()
-        .isLength({ min: 1, max: 200 })
+        .isLength({ max: 200 })
         .withMessage("Description can be a maximum of 200 characters"),
 
     body("imgUrl")
