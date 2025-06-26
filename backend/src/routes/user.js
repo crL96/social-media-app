@@ -13,6 +13,8 @@ router.get("/profile/:username", controller.getUserProfile);
 
 router.get("/search/:searchterm", controller.searchUsers);
 
+router.get("/suggested", controller.getSuggestedProfiles);
+
 router.use("/follow", followRouter);
 
 module.exports = router;

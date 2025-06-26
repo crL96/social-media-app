@@ -223,9 +223,62 @@ async function searchUsers(req, res) {
     }
 }
 
+async function getSuggestedProfiles(req, res) {
+    try {
+        // Get a list of user id's current user is following
+        // to avoid suggesting users already following
+        const { following } = await prisma.user.findUnique({
+            where: {
+                id: req.user.id,
+            },
+            select: {
+                following: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
+        });
+        const excludeList = following.map((item) => item.id);
+        excludeList.push(req.user.id);
+
+        // Return a list of users the current user isnt following
+        const users = await prisma.user.findMany({
+            where: {
+                id: {
+                    notIn: excludeList
+                }
+            },
+            select: {
+                username: true,
+                desc: true,
+                imgUrl: true,
+                _count: {
+                    select: {
+                        followedBy: true,
+                    },
+                },
+            },
+            orderBy: {
+                followedBy: {
+                    _count: "desc"
+                }
+            },
+            //if max query param is included, return max number, else no all matches
+            take: req.query.max ? Number(req.query.max) : undefined,
+        });
+
+        res.json(users);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     getCurrentUserProfile,
     getUserProfile,
     updateUserProfile,
     searchUsers,
+    getSuggestedProfiles,
 };
