@@ -88,8 +88,37 @@ async function getFollowList(req, res) {
     }
 }
 
+async function getFollowListByName(req, res) {
+    try {
+        const list = await prisma.user.findUnique({
+            where: {
+                username: req.params.username,
+            },
+            select: {
+                following: {
+                    select: {
+                        username: true,
+                        imgUrl: true,
+                    },
+                },
+                followedBy: {
+                    select: {
+                        username: true,
+                        imgUrl: true,
+                    },
+                },
+            },
+        });
+        res.json(list);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal server error");
+    }
+}
+
 module.exports = {
     followUser,
     unfollowUser,
     getFollowList,
+    getFollowListByName,
 };

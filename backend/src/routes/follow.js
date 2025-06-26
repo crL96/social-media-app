@@ -3,6 +3,7 @@ const controller = require("../controllers/followController");
 
 router.get("/", controller.getFollowList);
 
+router.get("/:username", controller.getFollowListByName);
 router.post("/:username", controller.followUser);
 router.delete("/:username", controller.unfollowUser);
 
