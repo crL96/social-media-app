@@ -5,12 +5,15 @@ import likeIcon from "../../assets/like-icon.svg";
 import likeActiveIcon from "../../assets/like-active-icon.svg";
 import Comment from "../comment/Comment";
 import AddComment from "../addComment/AddComment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Post({ data, hideSeeMore }) {
+    const navigate = useNavigate();
     const [showAddComment, setShowAddComment] = useState(false);
     const [liked, setLiked] = useState(data.liked);
+    const [deleted, setDeleted] = useState(false)
+    const ownerStatus = localStorage.getItem("currentUser") === data.author.username;
 
     const formattedTime = new Date(data.timestamp).toLocaleString("en-GB");
 
@@ -40,6 +43,27 @@ function Post({ data, hideSeeMore }) {
         }
     }
 
+    async function handleDelete() {
+        try {
+            const res = await fetch(`${API_URL}/posts/${data.id}`, {
+                method: "DELETE",
+                headers: {
+                    authorization: localStorage.getItem("jwt-token"),
+                },
+            });
+            if (res.status === 200) {
+                navigate("/");
+                setDeleted(true);
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    // Enables removing the post from display without fetching new data
+    // Fully removed with next data update/fetch
+    if (deleted) return null;
+
     return (
         <div className={[styles.post, "post"].join(" ")}>
             <div className={styles.header}>
@@ -52,11 +76,19 @@ function Post({ data, hideSeeMore }) {
                         <h2>{data.author.username}</h2>
                     </Link>
                 </div>
-                {hideSeeMore ? null :
-                    (<Link to={`/post/${data.id}`}>See More</Link>)
-                }
+                <div>
+                    {hideSeeMore ? null :
+                        (<Link to={`/post/${data.id}`}>See More</Link>)
+                    }
+                    {ownerStatus ? (
+                        <button className={styles.deleteBtn} onClick={handleDelete}>
+                            Delete
+                        </button>
+                    ): null}
+                </div>
             </div>
             <p>{data.text}</p>
+
             <div className={styles.footer}>
                 <div>
                     <img 

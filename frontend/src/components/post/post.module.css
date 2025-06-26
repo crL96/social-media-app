@@ -67,3 +67,12 @@
 .commentsHeader > button {
     height:fit-content;
 }
+
+.deleteBtn {
+    font-size: 0.9rem;
+    background-color: rgba(255, 0, 0, 0.87);
+}
+
+.deleteBtn:hover {
+    border-color: white;
+}
