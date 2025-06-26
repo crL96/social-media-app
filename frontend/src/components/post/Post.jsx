@@ -72,7 +72,14 @@ function Post({ data, hideSeeMore }) {
                         src={data.author.imgUrl ? data.author.imgUrl : userIcon}
                         alt="User icon"
                     />
-                    <Link className="profileLink" to={`/profile/${data.author.username}`}>
+                    <Link
+                        className="profileLink"
+                        to={
+                            ownerStatus
+                                ? "/profile"
+                                : `/profile/${data.author.username}`
+                        }
+                    >
                         <h2>{data.author.username}</h2>
                     </Link>
                 </div>

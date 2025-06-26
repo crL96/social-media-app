@@ -33,9 +33,16 @@ function Comment({ data }) {
         <div className={[styles.comment, "comment"].join(" ")}>
             <div className={styles.header}>
                 <img src={data.author.imgUrl ? data.author.imgUrl : userIcon} alt="User icon" />
-                <Link className="profileLink" to={`/profile/${data.author.username}`}>
-                    <h4>{data.author.username}</h4>
-                </Link>
+                    <Link
+                        className="profileLink"
+                        to={
+                            ownerStatus
+                                ? "/profile"
+                                : `/profile/${data.author.username}`
+                        }
+                    >
+                        <h4>{data.author.username}</h4>
+                    </Link>
                 {ownerStatus ? (
                     <button className={styles.deleteBtn} onClick={handleDelete}>
                         Delete
