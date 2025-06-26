@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./header.module.css";
 import { useEffect, useState } from "react";
+import searchIcon from "../../assets/search-icon.svg";
 
 function Header() {
     const [signedIn, setSignedIn] = useState(false);
@@ -24,6 +25,9 @@ function Header() {
             <nav>
                 {signedIn ? (
                     <>
+                        <Link to="/search/users">
+                            <img src={searchIcon} alt="Search" className={styles.icon} />
+                        </Link>
                         <Link to="/">Home</Link>
                         <Link to="/new-post">New Post</Link>
                         <Link to="/login" onClick={handleLogout}>Log Out</Link>

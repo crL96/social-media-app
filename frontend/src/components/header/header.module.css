@@ -18,6 +18,10 @@
     font-size: 1.15rem;
 }
 
+.icon {
+    height: 1.65rem;
+}
+
 @media (max-width: 500px) {
     .header {
         flex-direction: column;
