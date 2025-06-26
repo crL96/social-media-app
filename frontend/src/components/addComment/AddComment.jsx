@@ -23,7 +23,7 @@ function AddComment({ postId }) {
             if (response.status === 200) {
                 setErrorMessages([]);
                 e.target.reset()
-                // window.location.reload();
+                window.location.reload();
             } else if (response.status === 400) {
                 const data = await response.json()
                 setErrorMessages(data.errors)

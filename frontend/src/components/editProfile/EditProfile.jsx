@@ -29,6 +29,7 @@ function EditProfile({ user, closeFn }) {
             });
             if (res.status === 200) {
                 closeFn();
+                window.location.reload();
             } else if (res.status === 400) {
                 const payload = await res.json();
                 setErrorMessages(payload.errors);
