@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import PostDetails from "./pages/PostDetails";
 import NewPost from "./pages/NewPost";
 import ProfileDetails from "./pages/ProfileDetails";
-import UserProfile from "./pages/UserProfile";
 import SearchUsers from "./pages/SearchUsers";
 
 const routes = [
@@ -30,7 +29,7 @@ const routes = [
     },
     {
         path: "profile",
-        element: <UserProfile />,
+        element: <ProfileDetails />,
     },
     {
         path: "profile/:username",

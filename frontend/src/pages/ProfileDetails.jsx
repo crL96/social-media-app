@@ -14,13 +14,18 @@ function ProfileDetails() {
     useEffect(() => {
         async function fetchUser() {
             try {
-                const res = await fetch(`${API_URL}/user/profile/${username}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "Application/json",
-                        authorization: localStorage.getItem("jwt-token"),
-                    },
-                });
+                const res = await fetch(
+                    username
+                        ? `${API_URL}/user/profile/${username}`
+                        : `${API_URL}/user/profile`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "Application/json",
+                            authorization: localStorage.getItem("jwt-token"),
+                        },
+                    }
+                );
                 if (res.status === 200) {
                     const data = await res.json();
                     setUser(data);
@@ -41,7 +46,7 @@ function ProfileDetails() {
             <main className={styles.main}>
                 {user ? (
                     <>
-                        <Profile user={user} />
+                        <Profile user={user} currentUserStatus={!username} />
                         <h2>Posts</h2>
                         {user.posts.map((post) => {
                             return <Post key={post.id} data={post} />
