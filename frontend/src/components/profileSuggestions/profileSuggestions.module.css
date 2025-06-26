@@ -1,0 +1,26 @@
+.user > a {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0rem 0.5rem 0.5rem 0;   
+}
+
+.user > a:hover {
+    border-color: white;
+}
+
+.user h4 {
+    color: white;
+}
+
+.user img {
+    max-width: 70px;
+    max-height: 70px;
+    aspect-ratio: 1/1;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
