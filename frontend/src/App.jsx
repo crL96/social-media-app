@@ -3,6 +3,7 @@ import "./App.css";
 const API_URL = import.meta.env.VITE_API_URL;
 import Post from "./components/post/Post";
 import Header from "./components/header/Header";
+import ProfileSuggestions from "./components/profileSuggestions/ProfileSuggestions";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -35,11 +36,14 @@ function App() {
     return (
         <>
             <Header />
-            <main>
-                {posts.map((post) => {
-                    return <Post key={post.id} data={post} />;
-                })}
-            </main>
+            <div className="mainContainer">
+                <main>
+                    {posts.map((post) => {
+                        return <Post key={post.id} data={post} />;
+                    })}
+                </main>
+                <ProfileSuggestions />
+            </div>
         </>
     );
 }

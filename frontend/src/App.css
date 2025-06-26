@@ -4,3 +4,22 @@
   padding: 2rem;
   text-align: center;
 }
+
+.mainContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.profileSuggestions {
+  border: 2px solid white;
+  border-radius: 0.5rem;
+
+  height: fit-content;
+  padding: 1rem;
+}
+
+@media (max-width: 800px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+}
