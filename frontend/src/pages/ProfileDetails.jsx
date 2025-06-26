@@ -11,10 +11,6 @@ function ProfileDetails() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    if (user) {
-        user
-    }
-
     useEffect(() => {
         async function fetchUser() {
             try {
@@ -38,12 +34,6 @@ function ProfileDetails() {
         }
         fetchUser();
     }, [navigate, username]);
-
-    if (user === null) {
-        return (
-            <p>Test</p>
-        );
-    }
 
     return (
         <>
