@@ -23,6 +23,7 @@ function PostDetails() {
                     setPost(data);
                 } else if (res.status === 401) {
                     localStorage.removeItem("jwt-token");
+                    localStorage.removeItem("currentUser");
                     navigate("/login");
                 } else if (res.status === 404) {
                     navigate("/");

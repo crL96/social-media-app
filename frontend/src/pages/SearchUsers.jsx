@@ -25,6 +25,7 @@ function SearchUsers() {
                 setSearchResults(data.users);
             } else if (res.status === 401) {
                 localStorage.removeItem("jwt-token");
+                localStorage.removeItem("currentUser");
                 navigate("/login");
             }
         } catch (err) {

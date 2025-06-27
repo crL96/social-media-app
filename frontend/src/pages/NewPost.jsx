@@ -27,6 +27,7 @@ function NewPost() {
                 navigate("/");
             } else if (response.status === 401) {
                 localStorage.removeItem("jwt-token");
+                localStorage.removeItem("currentUser");
                 navigate("/login");
             } else if (response.status === 400) {
                 const data = await response.json()

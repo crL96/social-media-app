@@ -29,6 +29,10 @@ function ProfileDetails() {
                 if (res.status === 200) {
                     const data = await res.json();
                     setUser(data);
+                } else if (res.status === 401) {
+                    localStorage.removeItem("jwt-token");
+                    localStorage.removeItem("currentUser");
+                    navigate("/login");
                 } else {
                     navigate("/");
                 }
