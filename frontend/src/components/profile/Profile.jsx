@@ -1,6 +1,6 @@
 import styles from "./profile.module.css";
 import userIcon from "../../assets/user-icon.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 import EditProfile from "../editProfile/EditProfile";
 import FollowList from "../followList/FollowList";
@@ -9,6 +9,10 @@ function Profile({ user, currentUserStatus }) {
     const [following, setFollowing] = useState(user.following);
     const [showFollowList, setShowFollowList] = useState([false, "following"]);
     const [showEditProfile, setShowEditProfile] = useState(false);
+
+    useEffect(() => {
+        setFollowing(user.following);
+    }, [user])
 
     async function toggleFollow() {
         const res = await fetch(`${API_URL}/user/follow/${user.username}`, {
