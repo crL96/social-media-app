@@ -43,7 +43,7 @@ function Login() {
                 const resPayload = await res.json();
                 localStorage.setItem("jwt-token", resPayload.token);
                 localStorage.setItem("currentUser", resPayload.username);
-                navigate("/");
+                navigate("/home");
             }
         } catch (err) {
             console.log(err);

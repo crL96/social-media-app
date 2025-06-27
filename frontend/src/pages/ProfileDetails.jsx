@@ -34,11 +34,11 @@ function ProfileDetails() {
                     localStorage.removeItem("currentUser");
                     navigate("/login");
                 } else {
-                    navigate("/");
+                    navigate("/home");
                 }
             } catch (err) {
                 console.log(err);
-                navigate("/");
+                navigate("/home");
             }
         }
         fetchUser();

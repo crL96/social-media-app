@@ -5,10 +5,11 @@ import PostDetails from "./pages/PostDetails";
 import NewPost from "./pages/NewPost";
 import ProfileDetails from "./pages/ProfileDetails";
 import SearchUsers from "./pages/SearchUsers";
+import ServerStarting from "./pages/ServerStarting";
 
 const routes = [
     {
-        path: "/",
+        path: "/home",
         element: <App />,
     },
     {
@@ -38,6 +39,10 @@ const routes = [
     {
         path: "search/users",
         element: <SearchUsers />,
+    },
+    {
+        path: "/",
+        element: <ServerStarting />,
     },
 ];
 

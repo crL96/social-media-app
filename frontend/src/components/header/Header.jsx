@@ -29,7 +29,7 @@ function Header() {
                         <Link to="/search/users">
                             <img src={searchIcon} alt="Search" className={styles.icon} />
                         </Link>
-                        <Link to="/">Home</Link>
+                        <Link to="/home">Home</Link>
                         <Link to="/new-post">New Post</Link>
                         <Link to="/profile">Profile</Link>
                         <Link to="/login" onClick={handleLogout}>Log Out</Link>

@@ -26,7 +26,7 @@ function PostDetails() {
                     localStorage.removeItem("currentUser");
                     navigate("/login");
                 } else if (res.status === 404) {
-                    navigate("/");
+                    navigate("/home");
                 }
             } catch (err) {
                 console.log(err);
