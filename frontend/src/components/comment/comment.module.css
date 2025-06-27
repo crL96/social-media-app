@@ -8,13 +8,28 @@
 
 .header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    gap: 1rem;
+}
+
+.header > div {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
 
     position: relative;
 }
 
-.header > img {
+.header h4 {
+    margin: 0;
+
+    word-break: break-word;
+}
+
+.header img {
     max-width: 50px;
     max-height: 50px;
     aspect-ratio: 1/1;
@@ -24,9 +39,6 @@
 }
 
 .deleteBtn {
-    position: absolute;
-    right: 0.5rem;
-
     font-size: 0.9rem;
     background-color: rgba(255, 0, 0, 0.87);
 }
