@@ -38,8 +38,8 @@ function Comment({ data }) {
                         className="profileLink"
                         to={
                             ownerStatus
-                                ? "/profile"
-                                : `/profile/${data.author.username}`
+                                ? "/app/profile"
+                                : `/app/profile/${data.author.username}`
                         }
                     >
                         <h4>{data.author.username}</h4>

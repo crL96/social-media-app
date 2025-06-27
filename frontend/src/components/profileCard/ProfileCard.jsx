@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function ProfileCard({ user }) {
     return (
         <div className={styles.profileCard}>
-                <Link to={`/profile/${user.username}`}>
+                <Link to={`/app/profile/${user.username}`}>
                     <div className={styles.profileUpper}>
                         <img src={user.imgUrl ? user.imgUrl : userIcon} alt="User icon" />
                         <h2>{user.username}</h2>

@@ -6,11 +6,20 @@ import NewPost from "./pages/NewPost";
 import ProfileDetails from "./pages/ProfileDetails";
 import SearchUsers from "./pages/SearchUsers";
 import ServerStarting from "./pages/ServerStarting";
+import Home from "./pages/Home";
 
 const routes = [
     {
-        path: "/home",
+        path: "/app",
         element: <App />,
+        children: [
+            { path: "home", element: <Home /> },
+            { path: "new-post", element: <NewPost /> },
+            { path: "profile", element: <ProfileDetails /> },
+            { path: "profile/:username", element: <ProfileDetails /> },
+            { path: "post/:postId", element: <PostDetails /> },
+            { path: "search/users", element: <SearchUsers /> },
+        ],
     },
     {
         path: "signup",
@@ -19,26 +28,6 @@ const routes = [
     {
         path: "login",
         element: <Login />,
-    },
-    {
-        path: "post/:postId",
-        element: <PostDetails />,
-    },
-    {
-        path: "new-post",
-        element: <NewPost />,
-    },
-    {
-        path: "profile",
-        element: <ProfileDetails />,
-    },
-    {
-        path: "profile/:username",
-        element: <ProfileDetails />,
-    },
-    {
-        path: "search/users",
-        element: <SearchUsers />,
     },
     {
         path: "/",

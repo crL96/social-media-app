@@ -18,6 +18,11 @@
   margin-top: 4rem;
 }
 
+.mainContainer > main > h2 {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
 .profileSuggestions {
   border: 2px solid var(--text-clr);
   border-radius: 0.5rem;

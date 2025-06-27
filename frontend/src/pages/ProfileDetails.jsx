@@ -1,10 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
-import Header from "../components/header/Header";
 import Profile from "../components/profile/Profile";
 import Post from "../components/post/Post";
-import styles from "./profileDetails.module.css";
 
 function ProfileDetails() {
     const { username } = useParams();
@@ -46,8 +44,7 @@ function ProfileDetails() {
 
     return (
         <>
-            <Header />
-            <main className={styles.main}>
+            <main>
                 {user ? (
                     <>
                         <Profile user={user} currentUserStatus={!username} />

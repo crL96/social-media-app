@@ -26,12 +26,12 @@ function Header() {
             <nav>
                 {signedIn ? (
                     <>
-                        <Link to="/search/users">
+                        <Link to="/app/search/users">
                             <img src={searchIcon} alt="Search" className={styles.icon} />
                         </Link>
-                        <Link to="/home">Home</Link>
-                        <Link to="/new-post">New Post</Link>
-                        <Link to="/profile">Profile</Link>
+                        <Link to="/app/home">Home</Link>
+                        <Link to="/app/new-post">New Post</Link>
+                        <Link to="/app/profile">Profile</Link>
                         <Link to="/login" onClick={handleLogout}>Log Out</Link>
                     </>
                 ) : (

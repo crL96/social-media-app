@@ -2,7 +2,6 @@ import { useState } from "react";
 import styles from "./forms.module.css";
 import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_URL;
-import Header from "../components/header/Header";
 
 function NewPost() {
     const [errorMessage, setErrorMessage] = useState();
@@ -44,7 +43,6 @@ function NewPost() {
 
     return (
         <>
-            <Header />
             <main>
                 <p className={styles.errorMessage}>{errorMessage}</p>
                 <div className={styles.div}>

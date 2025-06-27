@@ -1,17 +1,16 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 import Post from "../components/post/Post";
+import { useNavigate } from "react-router-dom";
 
-function PostDetails() {
-    const { postId } = useParams();
-    const [post, setPost] = useState(null);
+function Home() {
+    const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function fetchPost(nComments) {
+        async function fetchPosts(n, nComments) {
             try {
-                const res = await fetch(`${API_URL}/posts/${postId}?max=${nComments}`, {
+                const res = await fetch(`${API_URL}/posts?max=${n}&comments=${nComments}`, {
                     headers: {
                         "Content-Type": "Application/json",
                         authorization: localStorage.getItem("jwt-token"),
@@ -19,31 +18,32 @@ function PostDetails() {
                 });
                 if (res.status === 200) {
                     const data = await res.json();
-                    setPost(data);
+                    setPosts(data);
                 } else if (res.status === 401) {
                     localStorage.removeItem("jwt-token");
                     localStorage.removeItem("currentUser");
                     navigate("/login");
-                } else if (res.status === 404) {
-                    navigate("/home");
                 }
             } catch (err) {
                 console.log(err);
             }
         }
-        fetchPost(50);
-    }, [navigate, postId]);
+        fetchPosts(15, 2);
+    }, [navigate]);
 
     return (
-        <>  
-            <main>
-                {post ?
-                <Post data={post} hideSeeMore={true}/>
-                : <span className="loader"></span>
-                }
-            </main>
-        </>
+        <main>
+            {posts.map((post) => {
+                return <Post key={post.id} data={post} />;
+            })}
+            {posts.length === 0 ? (
+                <p>
+                    Looks like you're not following anyone who has
+                    posted anything
+                </p>
+            ) : null}
+        </main>
     );
 }
 
-export default PostDetails;
+export default Home;

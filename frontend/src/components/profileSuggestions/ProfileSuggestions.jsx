@@ -41,7 +41,7 @@ function ProfileSuggestions({ nProfiles }) {
             {users.map((user) => {
                 return (
                     <div key={user.username} className={styles.user}>
-                        <Link to={`/profile/${user.username}`}>
+                        <Link to={`/app/profile/${user.username}`}>
                             <img
                                 src={
                                     user.imgUrl ? user.imgUrl : userIcon

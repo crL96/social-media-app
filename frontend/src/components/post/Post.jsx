@@ -76,8 +76,8 @@ function Post({ data, hideSeeMore }) {
                         className="profileLink"
                         to={
                             ownerStatus
-                                ? "/profile"
-                                : `/profile/${data.author.username}`
+                                ? "/app/profile"
+                                : `/app/profile/${data.author.username}`
                         }
                     >
                         <h2>{data.author.username}</h2>
@@ -85,7 +85,7 @@ function Post({ data, hideSeeMore }) {
                 </div>
                 <div>
                     {hideSeeMore ? null :
-                        (<Link to={`/post/${data.id}`}>See More</Link>)
+                        (<Link to={`/app/post/${data.id}`}>See More</Link>)
                     }
                     {ownerStatus ? (
                         <button className={styles.deleteBtn} onClick={handleDelete}>
@@ -131,7 +131,7 @@ function Post({ data, hideSeeMore }) {
                     })}
                     {/* If there are more comments than are displayed, display link */}
                     {data._count.comments > data.comments.length ? (
-                        <Link to={`/post/${data.id}`}>Show all comments</Link>
+                        <Link to={`/app/post/${data.id}`}>Show all comments</Link>
                     ) : null}
                 </div>
             )}
