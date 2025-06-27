@@ -14,6 +14,8 @@
 
 .user h4 {
     color: white;
+    word-break: break-word;
+    text-align: start;
 }
 
 .user img {
