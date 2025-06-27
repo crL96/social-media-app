@@ -36,6 +36,20 @@ function Login() {
         }
     }
 
+    async function handleGuestLogin() {
+        try {
+            const res = await fetch(`${API_URL}/auth/log-in/guest`);
+            if (res.status === 200) {
+                const resPayload = await res.json();
+                localStorage.setItem("jwt-token", resPayload.token);
+                localStorage.setItem("currentUser", resPayload.username);
+                navigate("/");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <>
             <Header />
@@ -53,6 +67,14 @@ function Login() {
                     <input type="password" name="password" id="password" required />
                     <button type="submit">Log in</button>
                 </form>
+                
+                <button
+                    type="button"
+                    className={styles.guestBtn}
+                    onClick={handleGuestLogin}
+                >
+                    Continue As Guest
+                </button>
             </main>
         </>
     );

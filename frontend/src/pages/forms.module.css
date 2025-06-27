@@ -39,3 +39,7 @@
 form > input {
     line-height: 1.5;
 }
+
+.guestBtn {
+    margin-top: 1rem;
+}
