@@ -46,6 +46,12 @@ function App() {
                     {posts.map((post) => {
                         return <Post key={post.id} data={post} />;
                     })}
+                    {posts.length === 0 ? (
+                        <p>
+                            Looks like you're not following anyone who has
+                            posted anything
+                        </p>
+                    ) : null}
                 </main>
                 <ProfileSuggestions nProfiles={5}/>
             </div>
