@@ -25,19 +25,22 @@
     border-radius: 50%;
 }
 
-.profileUpper > div {
+.profileUpperRight {
     width: 100%;
 }
 
-.profileUpper > div > div {
+.profileUpperRight > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    flex-wrap: wrap;
 }
 
 .profileLower {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .profileLower * {
@@ -63,5 +66,16 @@
 .profileLower > button:hover {
     border-color: transparent;
     /* TODO: SET COLOR TO ACCENT COLOR HERE */
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 500px) {
+    .profileUpper {
+        flex-direction: column;
+    }
+
+    .profileLower {
+        flex-direction: column;
+    }
 }
 

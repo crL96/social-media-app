@@ -53,7 +53,7 @@ function Profile({ user, currentUserStatus }) {
                 <div className={styles.profileContainer}>
                     <div className={styles.profileUpper}>
                         <img src={user.imgUrl ? user.imgUrl : userIcon} alt="User icon" />
-                        <div>
+                        <div className={styles.profileUpperRight}>
                             <div>
                                 <h2>{user.username}</h2>
                                 {currentUserStatus ? (
