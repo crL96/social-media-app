@@ -10,18 +10,23 @@
 
 .post > p {
     font-size: 1.1rem;
+
+    word-wrap: break-word;
 }
 
+/* FOOTER */
 .footer {
     display: flex;
     justify-content: space-between;
+    gap: 0.8rem;
+    flex-wrap: wrap;
 
     border-bottom: 2px solid white;
 }
 
 .footer > div {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
 
     align-items: center;
 }
@@ -34,15 +39,20 @@
     cursor: pointer;
 }
 
+/* HEADER */
 .header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap-reverse;
+    gap: 1rem;
 }
 
 .header > div {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    flex-wrap: wrap;
 }
 
 .header > div > img {
@@ -54,18 +64,10 @@
     border-radius: 50%;
 }
 
-.comments > * {
-    margin-bottom: 1rem;
-}
+.header > div h2 {
+    margin: 0;
 
-.commentsHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.commentsHeader > button {
-    height:fit-content;
+    word-break: break-word;
 }
 
 .deleteBtn {
@@ -75,4 +77,28 @@
 
 .deleteBtn:hover {
     border-color: white;
+}
+
+/* COMMENTS */
+.comments > * {
+    margin-bottom: 1rem;
+}
+
+.commentsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.commentsHeader > button {
+    height:fit-content;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 500px) {
+    .post {
+        padding: 1.5rem 1rem;
+    }
 }

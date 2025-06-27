@@ -105,8 +105,8 @@ function Post({ data, hideSeeMore }) {
                         alt="heart: press to like/unlike"
                     />
                     <p className={styles.likes}>Likes: {data._count.likes}</p>
-                    <p className={styles.commentsNumber}>Comments: {data._count.comments}</p>
                 </div>
+                <p className={styles.commentsNumber}>Comments: {data._count.comments}</p>
                 <p className={styles.timestamp}>{formattedTime}</p>
             </div>
             
