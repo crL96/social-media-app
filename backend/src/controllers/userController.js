@@ -190,7 +190,7 @@ const updateUserProfile = [
 
 async function searchUsers(req, res) {
     try {
-        const users = await prisma.user.findMany({
+        let users = await prisma.user.findMany({
             where: {
                 username: {
                     contains: req.params.searchterm,
@@ -213,6 +213,9 @@ async function searchUsers(req, res) {
                 }
             }
         });
+        // Filter out current user from list
+        users = users.filter((user) => user.username !== req.user.username);
+
         res.json({
             count: users.length,
             users: users,
