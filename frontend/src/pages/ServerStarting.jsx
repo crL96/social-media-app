@@ -27,7 +27,7 @@ function ServerStarting() {
     return (
         <div className="serverStarting">
             <header className={styles.header}>
-                <h1>Place<span>Holder</span></h1>
+                <h1>Post<span>IT</span></h1>
             </header>
             <div className={styles.main}>
                 <h2>Server is starting</h2>

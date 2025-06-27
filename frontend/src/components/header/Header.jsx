@@ -22,7 +22,7 @@ function Header() {
 
     return (
         <header className={styles.header}>
-            <h1>Place<span>Holder</span></h1>
+            <h1>Post<span>IT</span></h1>
             <nav>
                 {signedIn ? (
                     <>
