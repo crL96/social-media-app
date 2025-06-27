@@ -10,6 +10,10 @@ function App() {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
 
+    if (!localStorage.getItem("jwt-token")) {
+        navigate("/login");
+    }
+
     useEffect(() => {
         async function fetchPosts(n, nComments) {
             try {
@@ -24,6 +28,7 @@ function App() {
                     setPosts(data);
                 } else if (res.status === 401) {
                     localStorage.removeItem("jwt-token");
+                    localStorage.removeItem("currentUser");
                     navigate("/login");
                 }
             } catch (err) {
