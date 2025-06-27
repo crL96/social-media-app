@@ -26,6 +26,15 @@ function ProfileSuggestions({ nProfiles }) {
         fetchUsers(nProfiles);
     }, [nProfiles]);
 
+    if (users.length === 0) {
+        return (
+            <div className="profileSuggestions">
+                <h3>Suggestions</h3>
+                <span className="loader"></span>
+            </div>
+        );
+    }
+
     return (
         <div className="profileSuggestions">
             <h3>Suggestions</h3>
