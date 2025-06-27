@@ -6,12 +6,9 @@
 }
 
 .mainContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr min(300px, 35vw);
   gap: 1rem;
-}
-
-.mainContainer > main {
-  width: 100%;
 }
 
 .mainContainer > main > p {
@@ -25,14 +22,12 @@
 
   height: fit-content;
   padding: 1rem;
-
-  max-width: 30vw;
 }
 
 
 @media (max-width: 800px) {
   .mainContainer {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .profileSuggestions {
