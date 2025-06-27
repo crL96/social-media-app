@@ -13,6 +13,8 @@
     margin: 0 auto;
 
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.137);
+
+    background-color: var(--background-clr-shade);
 }
 
 .form > legend {
@@ -25,14 +27,14 @@
 
 .form > textarea,
 .form > input {
-    background-color: var(--background-clr-shade);
+    background-color: var(--background-clr);
     color: var(--text-clr);
     border-radius: 0.5rem;
     line-height: 2;
 }
 
 .form > input,
-.form > select,
+.form > textarea,
 .form > button {
     margin-bottom: 0.5rem;
 }
