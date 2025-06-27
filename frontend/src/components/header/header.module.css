@@ -22,7 +22,7 @@
     height: 1.65rem;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 760px) {
     .header {
         flex-direction: column;
         margin-bottom: 1rem;
