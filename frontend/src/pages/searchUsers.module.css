@@ -1,0 +1,25 @@
+.form {
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    max-width: 40ch;
+    margin: 0 auto 2rem auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.form > input {
+    line-height: 2;
+}
+
+/* .searchResults > *:hover {
+    border-color: ACCENT COLOR TODO!
+} */
+
+.searchResults {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}

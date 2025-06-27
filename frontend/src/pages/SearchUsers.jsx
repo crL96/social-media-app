@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import ProfileCard from "../components/profileCard/ProfileCard";
+import ProfileSuggestions from "../components/profileSuggestions/ProfileSuggestions";
+import "../App.css";
+import styles from "./searchUsers.module.css";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function SearchUsers() {
@@ -37,20 +40,23 @@ function SearchUsers() {
     return (
         <>
             <Header />
-            <main>
-                <form onSubmit={handleSearch}>
-                    <label htmlFor="search">Search: </label>
-                    <input type="text" name="searchterm" id="searchterm" />
-                    <button>Search</button>
-                </form>
-                <div className="searchResults">
-                    {searchResults.map((user) => {
-                        return (
-                            <ProfileCard key={user.username} user={user} />
-                        );
-                    })}
-                </div>
-            </main>
+            <div className="mainContainer">
+                <main>
+                    <form className={styles.form} onSubmit={handleSearch}>
+                        {/* <label htmlFor="search">Search: </label> */}
+                        <input type="text" name="searchterm" id="searchterm" />
+                        <button>Search</button>
+                    </form>
+                    <div className={styles.searchResults}>
+                        {searchResults.map((user) => {
+                            return (
+                                <ProfileCard key={user.username} user={user} />
+                            );
+                        })}
+                    </div>
+                </main>
+                <ProfileSuggestions nProfiles={5}/>
+            </div>
         </>
     );
 }
