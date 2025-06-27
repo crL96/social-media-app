@@ -52,7 +52,7 @@ function Post({ data, hideSeeMore }) {
                 },
             });
             if (res.status === 200) {
-                navigate("/home");
+                navigate("/app/home");
                 setDeleted(true);
             }
         } catch (err) {

@@ -38,7 +38,7 @@ function Signup() {
                     const resPayload = await loginRes.json();
                     localStorage.setItem("jwt-token", resPayload.token);
                     localStorage.setItem("currentUser", resPayload.username);
-                    navigate("/home");
+                    navigate("/app/home");
                 } else {
                     navigate("/login");
                 }
@@ -59,7 +59,7 @@ function Signup() {
                 const resPayload = await res.json();
                 localStorage.setItem("jwt-token", resPayload.token);
                 localStorage.setItem("currentUser", resPayload.username);
-                navigate("/home");
+                navigate("/app/home");
             }
         } catch (err) {
             console.log(err);

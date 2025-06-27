@@ -27,7 +27,7 @@ function Login() {
                 const resPayload = await res.json();
                 localStorage.setItem("jwt-token", resPayload.token);
                 localStorage.setItem("currentUser", resPayload.username);
-                navigate("/");
+                navigate("/app/home");
             } else {
                 setDisplayMsg(true);
             }
@@ -43,7 +43,7 @@ function Login() {
                 const resPayload = await res.json();
                 localStorage.setItem("jwt-token", resPayload.token);
                 localStorage.setItem("currentUser", resPayload.username);
-                navigate("/home");
+                navigate("/app/home");
             }
         } catch (err) {
             console.log(err);

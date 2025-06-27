@@ -16,7 +16,7 @@ function ServerStarting() {
                 .then((res) => {
                     if (res.status === 200) {
                         clearInterval(interval);
-                        navigate("/home");
+                        navigate("/app/home");
                     }
                 })
         }
