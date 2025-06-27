@@ -44,7 +44,9 @@ function NewPost() {
     return (
         <>
             <main>
-                <p className={styles.errorMessage}>{errorMessage}</p>
+                {errorMessage ? (
+                    <p className={styles.errorMessage}>{errorMessage}</p>
+                ) : null}
                 <div className={styles.div}>
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <legend>New Post</legend>
