@@ -25,10 +25,18 @@
 
   height: fit-content;
   padding: 1rem;
+
+  max-width: 30vw;
 }
+
 
 @media (max-width: 800px) {
   .mainContainer {
     flex-direction: column;
+  }
+
+  .profileSuggestions {
+    word-break: break-all;
+    max-width: 100%;
   }
 }
