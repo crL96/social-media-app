@@ -1,19 +1,21 @@
+@import "../../index.css";
+
 .user > a {
     display: flex;
     gap: 1rem;
     align-items: center;
-    border: 1px solid grey;
+    border: 2px solid var(--text-clr);
     border-radius: 0.5rem;
     padding: 1rem;
-    margin: 0rem 0.5rem 0.5rem 0;   
+    margin: 0rem 0.5rem 0.5rem 0;
 }
 
 .user > a:hover {
-    border-color: white;
+    border-color: var(--accent-clr-highlight);
 }
 
 .user h4 {
-    color: white;
+    color: var(--text-clr);
 
     overflow: hidden;
 }

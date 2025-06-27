@@ -1,9 +1,14 @@
+@import "../../index.css";
+
 .dialog {
     position: fixed;
     top: 8vh;
 
     border-radius: 0.5rem;
     min-width: 300px;
+
+    background-color: var(--text-clr);
+    color: var(--background-clr);
 }
 
 .header {
@@ -27,14 +32,18 @@
     display: flex;
     gap: 1rem;
     align-items: center;
-    border: 1px solid grey;
+    border: 2px solid grey;
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 0rem 0.5rem 0.5rem 0;   
 }
 
+.user > a:hover {
+    border-color: var(--accent-clr-hightlight);
+}
+
 .user h4 {
-    color: white;
+    color: var(--background-clr);
 }
 
 .user img {

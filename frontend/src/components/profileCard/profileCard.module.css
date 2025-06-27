@@ -1,12 +1,12 @@
+@import "../../index.css";
+
 .profileCard {
-    border: 2px solid white;
+    border: 2px solid var(--text-clr);
     border-radius: 0.5rem;
 
     text-align: start;
 
     padding: 1rem;
-
-    color: white;
 }
 
 .profileUpper  > img {
@@ -19,17 +19,17 @@
 }
 
 .profileUpper {
-    color: white;
+    color: var(--text-clr);
     display: flex;
     align-items: center;
     gap: 1rem;
     
     padding-bottom: 1rem;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--text-clr);
 }
 
 .profileLower {
-    color: white;
+    color: var(--text-clr);
     display: flex;
     justify-content: space-between;
     align-items: center;

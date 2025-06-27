@@ -1,5 +1,7 @@
+@import "../index.css";
+
 .form {
-    border: 2px solid white;
+    border: 2px solid var(--text-clr);
     border-radius: 0.5rem;
     padding: 1rem;
 
@@ -11,12 +13,15 @@
 }
 
 .form > input {
+    background-color: var(--background-clr-shade);
+    color: var(--text-clr);
+    border-radius: 0.5rem;
     line-height: 2;
 }
 
-/* .searchResults > *:hover {
-    border-color: ACCENT COLOR TODO!
-} */
+.searchResults > *:hover {
+    border-color: var(--accent-clr-highlight);
+}
 
 .searchResults {
     display: grid;

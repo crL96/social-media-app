@@ -4,6 +4,9 @@
 
     border-radius: 0.5rem;
     min-width: 300px;
+
+    background-color: var(--text-clr);
+    color: var(--background-clr);
 }
 
 .dialog > form {

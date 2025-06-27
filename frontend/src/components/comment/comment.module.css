@@ -1,9 +1,13 @@
+@import "../../index.css";
+
 .comment {
-    border: 2px solid white;
+    border: 2px solid var(--text-clr);
     border-radius: 0.5rem;
     text-align: start;
 
     padding: 1rem;
+
+    background-color: var(--background-clr);
 }
 
 .header {
@@ -41,8 +45,4 @@
 .deleteBtn {
     font-size: 0.9rem;
     background-color: rgba(255, 0, 0, 0.87);
-}
-
-.deleteBtn:hover {
-    border-color: white;
 }

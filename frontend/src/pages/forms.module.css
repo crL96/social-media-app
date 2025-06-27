@@ -1,5 +1,7 @@
+@import "../index.css";
+
 .form {
-    border: 2px solid white;
+    border: 2px solid var(--text-clr);
     padding: 1rem;
     border-radius: 0.5rem;
     display: flex;
@@ -9,6 +11,8 @@
     max-width: 70ch;
 
     margin: 0 auto;
+
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.137);
 }
 
 .form > legend {
@@ -17,6 +21,14 @@
     margin-bottom: 0.8rem;
     text-align: center;
     font-size: 2rem;
+}
+
+.form > textarea,
+.form > input {
+    background-color: var(--background-clr-shade);
+    color: var(--text-clr);
+    border-radius: 0.5rem;
+    line-height: 2;
 }
 
 .form > input,
