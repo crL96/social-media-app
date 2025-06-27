@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --background-clr: rgb(247, 247, 247);
-  --background-clr-shade: rgb(255, 255, 255);
-  --text-clr: black;
+  --background-clr: #242424;
+  --background-clr-shade: #1a1a1a;
+  --text-clr: rgb(245, 245, 245);
   --accent-clr: #d34317;
   --accent-clr-highlight: #f74e1a;
 
@@ -82,10 +82,10 @@ button:focus-visible {
   }
 } 
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background-clr: #242424;
-    --background-clr-shade: #1a1a1a;
-    --text-clr: rgb(245, 245, 245);
+    --background-clr: rgb(247, 247, 247);
+    --background-clr-shade: rgb(255, 255, 255);
+    --text-clr: black;
   }
 }
