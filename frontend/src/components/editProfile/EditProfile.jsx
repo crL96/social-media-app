@@ -13,7 +13,7 @@ function EditProfile({ user, closeFn }) {
 
             let imgUrlValue = imgUrl;
             if (imgUrl === "") {
-                imgUrlValue = null;
+                imgUrlValue = undefined;
             }
 
             const res = await fetch(`${API_URL}/user/profile`, {
@@ -24,7 +24,7 @@ function EditProfile({ user, closeFn }) {
                 },
                 body: JSON.stringify({
                     desc,
-                    imgUrlValue,
+                    imgUrl: imgUrlValue,
                 }),
             });
             if (res.status === 200) {
