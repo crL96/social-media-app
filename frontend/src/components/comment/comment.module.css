@@ -10,6 +10,10 @@
     background-color: var(--background-clr);
 }
 
+.comment > p {
+    white-space: pre-line;
+}
+
 .header {
     display: flex;
     justify-content: space-between;

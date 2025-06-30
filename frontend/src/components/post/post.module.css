@@ -17,6 +17,8 @@
     font-size: 1.1rem;
 
     word-wrap: break-word;
+
+    white-space: pre-line;
 }
 
 /* FOOTER */
