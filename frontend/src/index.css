@@ -73,6 +73,10 @@ button:focus-visible {
   margin: 2rem;
 }
 
+textarea {
+  resize: vertical;
+}
+
 @keyframes rotation {
   0% {
         transform: rotate(0deg);
