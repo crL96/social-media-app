@@ -65,7 +65,7 @@ function Post({ data, hideSeeMore }) {
     if (deleted) return null;
 
     return (
-        <div className={[styles.post, "post"].join(" ")}>
+        <article className={[styles.post, "post"].join(" ")}>
             <div className={styles.header}>
                 <div>
                     <img
@@ -135,7 +135,7 @@ function Post({ data, hideSeeMore }) {
                     ) : null}
                 </div>
             )}
-        </div>
+        </article>
     );
 }
 
