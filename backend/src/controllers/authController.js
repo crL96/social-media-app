@@ -3,6 +3,7 @@ const brycpt = require("bcryptjs");
 const { validationResult, validateUser } = require("../util/validation");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const authService = require("../services/authService");
 
 const createUser = [
     validateUser,
@@ -17,15 +18,7 @@ const createUser = [
         }
 
         try {
-            const hashedPw = await brycpt.hash(req.body.password, 10);
-
-            await prisma.user.create({
-                data: {
-                    username: req.body.username,
-                    password: hashedPw,
-                    email: req.body.email,
-                },
-            });
+            authService.createUser(req.body);
             res.status(200).send("User created");
         } catch (err) {
             console.log(err.message);
