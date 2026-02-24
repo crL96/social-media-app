@@ -47,7 +47,7 @@ async function loginGuest() {
     });
     const expiresIn = "6h";
     const signedToken = createJwt(guest.id, expiresIn);
-    return { signedToken, expiresIn };
+    return { guest, signedToken, expiresIn };
 }
 
 function createJwt(id, expiresIn) {
@@ -61,4 +61,4 @@ function createJwt(id, expiresIn) {
     });
 }
 
-export { createUser, loginUser, loginGuest };
+module.exports = { createUser, loginUser, loginGuest };

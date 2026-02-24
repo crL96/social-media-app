@@ -14,7 +14,7 @@ const createUser = [
         }
 
         try {
-            authService.createUser(req.body);
+            await authService.createUser(req.body);
             res.status(200).send("User created");
         } catch (err) {
             console.log(err.message);
@@ -25,7 +25,7 @@ const createUser = [
 
 async function loginUser(req, res) {
     try {
-        const { user, signedToken, expiresIn } = authService.loginUser(
+        const { user, signedToken, expiresIn } = await authService.loginUser(
             req.body,
         );
         res.json({
@@ -40,7 +40,7 @@ async function loginUser(req, res) {
 
 async function guestLogin(req, res) {
     try {
-        const { signedToken, expiresIn } = authService.loginGuest();
+        const { signedToken, expiresIn } = await authService.loginGuest();
         res.json({
             token: "Bearer " + signedToken,
             expires: expiresIn,
