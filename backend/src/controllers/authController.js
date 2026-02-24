@@ -1,8 +1,4 @@
-const prisma = require("../config/prisma");
-const brycpt = require("bcryptjs");
 const { validationResult, validateUser } = require("../util/validation");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const authService = require("../services/authService");
 
 const createUser = [
