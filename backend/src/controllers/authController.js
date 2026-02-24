@@ -44,25 +44,11 @@ async function loginUser(req, res) {
 
 async function guestLogin(req, res) {
     try {
-        const guest = await prisma.user.findUnique({
-            where: {
-                username: "Guest",
-            },
-        });
-        // Issue JWT token
-        const payload = {
-            sub: guest.id,
-            iat: Date.now(),
-        };
-        const expiresIn = "6h";
-
-        const signedToken = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: expiresIn,
-        });
+        const { signedToken, expiresIn } = authService.loginGuest();
         res.json({
             token: "Bearer " + signedToken,
             expires: expiresIn,
-            username: guest.username,
+            username: "Guest",
         });
     } catch (err) {
         console.log(err.message);

@@ -46,4 +46,23 @@ async function loginUser(data) {
     return { user, signedToken, expiresIn };
 }
 
-export { createUser, loginUser };
+async function loginGuest() {
+    const guest = await prisma.user.findUnique({
+        where: {
+            username: "Guest",
+        },
+    });
+    // Issue JWT token
+    const payload = {
+        sub: guest.id,
+        iat: Date.now(),
+    };
+    const expiresIn = "6h";
+
+    const signedToken = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: expiresIn,
+    });
+    return { signedToken, expiresIn };
+}
+
+export { createUser, loginUser, loginGuest };
