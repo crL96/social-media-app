@@ -34,15 +34,8 @@ async function loginUser(data) {
         throw new Error("Incorrect email or password");
     }
 
-    const payload = {
-        sub: user.id,
-        iat: Date.now(),
-    };
     const expiresIn = "2d";
-
-    const signedToken = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: expiresIn,
-    });
+    const signedToken = createJwt(user.id, expiresIn);
     return { user, signedToken, expiresIn };
 }
 
@@ -52,17 +45,20 @@ async function loginGuest() {
             username: "Guest",
         },
     });
-    // Issue JWT token
+    const expiresIn = "6h";
+    const signedToken = createJwt(guest.id, expiresIn);
+    return { signedToken, expiresIn };
+}
+
+function createJwt(id, expiresIn) {
     const payload = {
-        sub: guest.id,
+        sub: id,
         iat: Date.now(),
     };
-    const expiresIn = "6h";
 
-    const signedToken = jwt.sign(payload, process.env.JWT_SECRET, {
+    return jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: expiresIn,
     });
-    return { signedToken, expiresIn };
 }
 
 export { createUser, loginUser, loginGuest };
