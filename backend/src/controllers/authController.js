@@ -29,40 +29,16 @@ const createUser = [
 
 async function loginUser(req, res) {
     try {
-        const message = "Incorrect email or password";
-
-        const user = await prisma.user.findUnique({
-            where: {
-                email: req.body.email,
-            },
-        });
-        if (!user) {
-            res.status(401).send(message);
-            return;
-        }
-        const match = await brycpt.compare(req.body.password, user.password);
-        if (!match) {
-            res.status(401).send(message);
-            return;
-        }
-        // Since user exists and pw matches, issue JWT
-        const payload = {
-            sub: user.id,
-            iat: Date.now(),
-        };
-        const expiresIn = "2d";
-
-        const signedToken = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: expiresIn,
-        });
+        const { user, signedToken, expiresIn } = authService.loginUser(
+            req.body,
+        );
         res.json({
             token: "Bearer " + signedToken,
             expires: expiresIn,
             username: user.username,
         });
     } catch (err) {
-        console.log(err.message);
-        res.status(500).send("Internal server error");
+        res.status(401).send(err.Message);
     }
 }
 
