@@ -1,5 +1,37 @@
 const prisma = require("../config/prisma");
 
+async function createUser(username, email, hashedPw) {
+    try {
+        await prisma.user.create({
+            data: {
+                username: username,
+                password: hashedPw,
+                email: email,
+            },
+        });
+    } catch {
+        throw new Error("Could not create user");
+    }
+}
+
+async function getUserByEmail(email) {
+    const user = await prisma.user.findUnique({
+        where: {
+            email: email,
+        },
+    });
+    return user;
+}
+
+async function getUserByUsername(username) {
+    const user = await prisma.user.findUnique({
+        where: {
+            username: username,
+        },
+    });
+    return user;
+}
+
 async function getUserProfileById(id) {
     const user = await prisma.user.findUnique({
         where: {
@@ -121,4 +153,11 @@ async function updateUser(id, desc, imgUrl) {
     }
 }
 
-module.exports = { getUserProfileById, getUserProfileByUsername, updateUser };
+module.exports = {
+    getUserProfileById,
+    getUserProfileByUsername,
+    updateUser,
+    createUser,
+    getUserByEmail,
+    getUserByUsername,
+};

@@ -1,30 +1,21 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const prisma = require("../config/prisma");
 const brycpt = require("bcryptjs");
+const persistence = require("../persistence/userPersistence");
 
 async function createUser(data) {
     try {
         const hashedPw = await brycpt.hash(data.password, 10);
 
-        await prisma.user.create({
-            data: {
-                username: data.username,
-                password: hashedPw,
-                email: data.email,
-            },
-        });
-    } catch {
-        throw new Error("Could not create user");
+        await persistence.createUser(data.username, data.email, hashedPw);
+    } catch (err) {
+        throw err;
     }
 }
 
 async function loginUser(data) {
-    const user = await prisma.user.findUnique({
-        where: {
-            email: data.email,
-        },
-    });
+    const user = await persistence.getUserByEmail(data.email);
+
     if (!user) {
         throw new Error("Incorrect email or password");
     }
@@ -40,11 +31,7 @@ async function loginUser(data) {
 }
 
 async function loginGuest() {
-    const guest = await prisma.user.findUnique({
-        where: {
-            username: "Guest",
-        },
-    });
+    const guest = await persistence.getUserByUsername("Guest");
     const expiresIn = "6h";
     const signedToken = createJwt(guest.id, expiresIn);
     return { guest, signedToken, expiresIn };
