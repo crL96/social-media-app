@@ -1,65 +1,10 @@
 const prisma = require("../config/prisma");
 const { validationResult, validateUserProfile } = require("../util/validation");
+const service = require("../services/userService");
 
 async function getCurrentUserProfile(req, res) {
     try {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: req.user.id,
-            },
-            select: {
-                email: true,
-                username: true,
-                desc: true,
-                imgUrl: true,
-                _count: {
-                    select: {
-                        posts: true,
-                        followedBy: true,
-                        following: true,
-                    },
-                },
-                posts: {
-                    select: {
-                        id: true,
-                        text: true,
-                        timestamp: true,
-                        author: {
-                            select: {
-                                username: true,
-                                imgUrl: true,
-                            },
-                        },
-                        _count: {
-                            select: {
-                                likes: true,
-                                comments: true,
-                            },
-                        },
-                        // Include to check if current user has liked
-                        likes: {
-                            select: {
-                                id: true,
-                            },
-                        },
-                    },
-                    orderBy: {
-                        timestamp: "desc",
-                    },
-                },
-            },
-        });
-
-        // For each post check if current user has liked, then remove likes list before response
-        user.posts.map((post) => {
-            if (post.likes.some(user => user.id === req.user.id)) {
-                post.liked = true;
-            } else {
-                post.liked = false;
-            }
-            delete post.likes;
-        });
-
+        const user = await service.getUserProfileById(req.user.id);
         res.json(user);
     } catch (err) {
         console.log(err.message);
@@ -69,80 +14,12 @@ async function getCurrentUserProfile(req, res) {
 
 async function getUserProfile(req, res) {
     try {
-        const user = await prisma.user.findUnique({
-            where: {
-                username: req.params.username,
-            },
-            select: {
-                username: true,
-                desc: true,
-                imgUrl: true,
-                _count: {
-                    select: {
-                        posts: true,
-                        followedBy: true,
-                        following: true,
-                    },
-                },
-                posts: {
-                    select: {
-                        id: true,
-                        text: true,
-                        timestamp: true,
-                        author: {
-                            select: {
-                                username: true,
-                                imgUrl: true,
-                            },
-                        },
-                        _count: {
-                            select: {
-                                likes: true,
-                                comments: true,
-                            },
-                        },
-                        // Include to check if current user has liked
-                        likes: {
-                            select: {
-                                id: true,
-                            },
-                        },
-                    },
-                    orderBy: {
-                        timestamp: "desc",
-                    },
-                },
-                //Include to be able to check if current user is following or not
-                followedBy: {
-                    select: {
-                        id: true,
-                    },
-                },
-            },
-        });
-        
-        if (user === null) {
-            res.status(404).send("No user found");
-            return;
-        }
+        const user = await service.getUserProfileByUsername(
+            req.params.username,
+            req.user.id,
+        );
 
-        // Check if current user is following, then remove follower list before res
-        if (user.followedBy.some(follower => follower.id === req.user.id)) {
-            user.following = true;
-        } else {
-            user.following = false;
-        }
-        delete user.followedBy;
-
-        // For each post check if current user has liked, then remove likes list before response
-        user.posts.map((post) => {
-            if (post.likes.some(user => user.id === req.user.id)) {
-                post.liked = true;
-            } else {
-                post.liked = false;
-            }
-            delete post.likes;
-        });
+        if (user == null) res.status(404).send("No user found");
 
         res.json(user);
     } catch (err) {
@@ -166,20 +43,16 @@ const updateUserProfile = [
         try {
             if (!req.body || !(req.body.desc || req.body.imgUrl)) {
                 res.status(400).send(
-                    "Include either one or both of 'desc' or 'imgUrl' in body"
+                    "Include either one or both of 'desc' or 'imgUrl' in body",
                 );
                 return;
             }
 
-            const user = await prisma.user.update({
-                where: {
-                    id: req.user.id,
-                },
-                data: {
-                    desc: req.body.desc,
-                    imgUrl: req.body.imgUrl,
-                },
-            });
+            await service.updateUser(
+                req.user.id,
+                req.body.desc,
+                req.body.imgUrl,
+            );
             res.status(200).send("User profile updated");
         } catch (err) {
             console.log(err.message);
@@ -209,9 +82,9 @@ async function searchUsers(req, res) {
             },
             orderBy: {
                 followedBy: {
-                    _count: "desc"
-                }
-            }
+                    _count: "desc",
+                },
+            },
         });
         // Filter out current user from list
         users = users.filter((user) => user.username !== req.user.username);
@@ -249,8 +122,8 @@ async function getSuggestedProfiles(req, res) {
         const users = await prisma.user.findMany({
             where: {
                 id: {
-                    notIn: excludeList
-                }
+                    notIn: excludeList,
+                },
             },
             select: {
                 username: true,
@@ -264,8 +137,8 @@ async function getSuggestedProfiles(req, res) {
             },
             orderBy: {
                 followedBy: {
-                    _count: "desc"
-                }
+                    _count: "desc",
+                },
             },
             //if max query param is included, return max number, else no all matches
             take: req.query.max ? Number(req.query.max) : undefined,
