@@ -1,4 +1,3 @@
-const prisma = require("../config/prisma");
 const { validationResult, validateUserProfile } = require("../util/validation");
 const service = require("../services/userService");
 
@@ -63,31 +62,10 @@ const updateUserProfile = [
 
 async function searchUsers(req, res) {
     try {
-        let users = await prisma.user.findMany({
-            where: {
-                username: {
-                    contains: req.params.searchterm,
-                    mode: "insensitive",
-                },
-            },
-            select: {
-                username: true,
-                desc: true,
-                imgUrl: true,
-                _count: {
-                    select: {
-                        followedBy: true,
-                    },
-                },
-            },
-            orderBy: {
-                followedBy: {
-                    _count: "desc",
-                },
-            },
-        });
-        // Filter out current user from list
-        users = users.filter((user) => user.username !== req.user.username);
+        const users = await service.searchUsers(
+            req.params.searchterm,
+            req.user.username,
+        );
 
         res.json({
             count: users.length,
@@ -101,48 +79,10 @@ async function searchUsers(req, res) {
 
 async function getSuggestedProfiles(req, res) {
     try {
-        // Get a list of user id's current user is following
-        // to avoid suggesting users already following
-        const { following } = await prisma.user.findUnique({
-            where: {
-                id: req.user.id,
-            },
-            select: {
-                following: {
-                    select: {
-                        id: true,
-                    },
-                },
-            },
-        });
-        const excludeList = following.map((item) => item.id);
-        excludeList.push(req.user.id);
-
-        // Return a list of users the current user isnt following
-        const users = await prisma.user.findMany({
-            where: {
-                id: {
-                    notIn: excludeList,
-                },
-            },
-            select: {
-                username: true,
-                desc: true,
-                imgUrl: true,
-                _count: {
-                    select: {
-                        followedBy: true,
-                    },
-                },
-            },
-            orderBy: {
-                followedBy: {
-                    _count: "desc",
-                },
-            },
-            //if max query param is included, return max number, else no all matches
-            take: req.query.max ? Number(req.query.max) : undefined,
-        });
+        const users = await service.getSuggestedProfiles(
+            req.user.id,
+            req.query.max,
+        );
 
         res.json(users);
     } catch (err) {

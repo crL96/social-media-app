@@ -32,6 +32,78 @@ async function getUserByUsername(username) {
     return user;
 }
 
+async function searchUsersByUsername(searchTerm) {
+    const users = await prisma.user.findMany({
+        where: {
+            username: {
+                contains: searchTerm,
+                mode: "insensitive",
+            },
+        },
+        select: {
+            username: true,
+            desc: true,
+            imgUrl: true,
+            _count: {
+                select: {
+                    followedBy: true,
+                },
+            },
+        },
+        orderBy: {
+            followedBy: {
+                _count: "desc",
+            },
+        },
+    });
+    return users;
+}
+
+async function getIdsForFollowing(currentUserId) {
+    let { following } = await prisma.user.findUnique({
+        where: {
+            id: currentUserId,
+        },
+        select: {
+            following: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+    following = following.map((item) => item.id);
+    return following;
+}
+
+async function getUsersNotExcluded(excludeList, maxCount = null) {
+    const users = await prisma.user.findMany({
+        where: {
+            id: {
+                notIn: excludeList,
+            },
+        },
+        select: {
+            username: true,
+            desc: true,
+            imgUrl: true,
+            _count: {
+                select: {
+                    followedBy: true,
+                },
+            },
+        },
+        orderBy: {
+            followedBy: {
+                _count: "desc",
+            },
+        },
+        //if max query param is included, return max number, else no all matches
+        take: maxCount ? Number(maxCount) : undefined,
+    });
+    return users;
+}
+
 async function getUserProfileById(id) {
     const user = await prisma.user.findUnique({
         where: {
@@ -160,4 +232,7 @@ module.exports = {
     createUser,
     getUserByEmail,
     getUserByUsername,
+    searchUsersByUsername,
+    getIdsForFollowing,
+    getUsersNotExcluded,
 };

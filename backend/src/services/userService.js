@@ -60,4 +60,24 @@ async function updateUser(id, desc, imgUrl) {
     }
 }
 
-module.exports = { getUserProfileById, getUserProfileByUsername, updateUser };
+async function searchUsers(searchTerm, currentUsername) {
+    let users = await persistence.searchUsersByUsername(searchTerm);
+    users = users.filter((user) => user.username !== currentUsername);
+    return users;
+}
+
+async function getSuggestedProfiles(currentUserId, maxCount = null) {
+    const excludeList = await persistence.getIdsForFollowing(currentUserId);
+    excludeList.push(currentUserId);
+
+    const users = await persistence.getUsersNotExcluded(excludeList, maxCount);
+    return users;
+}
+
+module.exports = {
+    getUserProfileById,
+    getUserProfileByUsername,
+    updateUser,
+    searchUsers,
+    getSuggestedProfiles,
+};
