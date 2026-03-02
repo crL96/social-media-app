@@ -1,8 +1,8 @@
-const persistence = require("../persistence/userPersistence");
+const repo = require("../repositories/userRepository");
 
 async function getUserProfileById(id) {
     try {
-        const user = await persistence.getUserProfileById(id);
+        const user = await repo.getUserProfileById(id);
 
         // For each post check if current user has liked, then remove likes list before response
         user.posts.map((post) => {
@@ -23,7 +23,7 @@ async function getUserProfileById(id) {
 
 async function getUserProfileByUsername(username, currentUserId) {
     try {
-        const user = await persistence.getUserProfileByUsername(username);
+        const user = await repo.getUserProfileByUsername(username);
 
         if (user === null) return null;
 
@@ -54,23 +54,23 @@ async function getUserProfileByUsername(username, currentUserId) {
 
 async function updateUser(id, desc, imgUrl) {
     try {
-        await persistence.updateUser(id, desc, imgUrl);
+        await repo.updateUser(id, desc, imgUrl);
     } catch (err) {
         throw err;
     }
 }
 
 async function searchUsers(searchTerm, currentUsername) {
-    let users = await persistence.searchUsersByUsername(searchTerm);
+    let users = await repo.searchUsersByUsername(searchTerm);
     users = users.filter((user) => user.username !== currentUsername);
     return users;
 }
 
 async function getSuggestedProfiles(currentUserId, maxCount = null) {
-    const excludeList = await persistence.getIdsForFollowing(currentUserId);
+    const excludeList = await repo.getIdsForFollowing(currentUserId);
     excludeList.push(currentUserId);
 
-    const users = await persistence.getUsersNotExcluded(excludeList, maxCount);
+    const users = await repo.getUsersNotExcluded(excludeList, maxCount);
     return users;
 }
 

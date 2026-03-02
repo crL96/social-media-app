@@ -1,20 +1,20 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const brycpt = require("bcryptjs");
-const persistence = require("../persistence/userPersistence");
+const repo = require("../repositories/userRepository");
 
 async function createUser(data) {
     try {
         const hashedPw = await brycpt.hash(data.password, 10);
 
-        await persistence.createUser(data.username, data.email, hashedPw);
+        await repo.createUser(data.username, data.email, hashedPw);
     } catch (err) {
         throw err;
     }
 }
 
 async function loginUser(data) {
-    const user = await persistence.getUserByEmail(data.email);
+    const user = await repo.getUserByEmail(data.email);
 
     if (!user) {
         throw new Error("Incorrect email or password");
@@ -31,7 +31,7 @@ async function loginUser(data) {
 }
 
 async function loginGuest() {
-    const guest = await persistence.getUserByUsername("Guest");
+    const guest = await repo.getUserByUsername("Guest");
     const expiresIn = "6h";
     const signedToken = createJwt(guest.id, expiresIn);
     return { guest, signedToken, expiresIn };
