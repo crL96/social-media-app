@@ -1,18 +1,11 @@
 const repo = require("../repositories/userRepository");
+const { attachLikedFlagToPosts } = require("../util/postUtils");
 
 async function getUserProfileById(id) {
     try {
         const user = await repo.getUserProfileById(id);
 
-        // For each post check if current user has liked, then remove likes list before response
-        user.posts.map((post) => {
-            if (post.likes.some((user) => user.id === id)) {
-                post.liked = true;
-            } else {
-                post.liked = false;
-            }
-            delete post.likes;
-        });
+        user.posts = attachLikedFlagToPosts(user.posts, id);
 
         return user;
     } catch (err) {
@@ -35,15 +28,7 @@ async function getUserProfileByUsername(username, currentUserId) {
         }
         delete user.followedBy;
 
-        // For each post check if current user has liked, then remove likes list before res
-        user.posts.map((post) => {
-            if (post.likes.some((user) => user.id === currentUserId)) {
-                post.liked = true;
-            } else {
-                post.liked = false;
-            }
-            delete post.likes;
-        });
+        user.posts = attachLikedFlagToPosts(user.posts, currentUserId);
 
         return user;
     } catch (err) {
