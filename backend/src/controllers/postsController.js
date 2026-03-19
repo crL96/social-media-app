@@ -1,89 +1,14 @@
 const prisma = require("../config/prisma");
 const { validationResult, validatePost } = require("../util/validation");
+const service = require("../services/postService");
 
 async function getFollowingPosts(req, res) {
     try {
-        // Get list of users followed
-        const { following } = await prisma.user.findUnique({
-            where: {
-                id: req.user.id,
-            },
-            select: {
-                following: {
-                    select: {
-                        id: true,
-                    },
-                },
-            },
-        });
-        const followList = following.map((item) => item.id);
-        // Include users own posts in list
-        followList.push(req.user.id);
-
-        //Get list of posts from followed users
-        const posts = await prisma.post.findMany({
-            where: {
-                authorId: {
-                    in: followList,
-                },
-            },
-            select: {
-                id: true,
-                text: true,
-                timestamp: true,
-                author: {
-                    select: {
-                        username: true,
-                        imgUrl: true,
-                    },
-                },
-                _count: {
-                    select: {
-                        likes: true,
-                        comments: true,
-                    },
-                },
-                comments: {
-                    select: {
-                        id: true,
-                        text: true,
-                        timestamp: true,
-                        author: {
-                            select: {
-                                username: true,
-                                imgUrl: true,
-                            },
-                        },
-                    },
-                    orderBy: {
-                        timestamp: "desc",
-                    },
-                    //if comments query param is included, return max number, else no comments
-                    take: req.query.comments ? Number(req.query.comments) : 0,
-                },
-                // Include to check if current user has liked
-                likes: {
-                    select: {
-                        id: true,
-                    },
-                },
-            },
-            orderBy: {
-                timestamp: "desc",
-            },
-            //if max query param is included, return max number, else all matches
-            take: req.query.max ? Number(req.query.max) : undefined,
-        });
-
-        // For each post check if current user has liked, then remove likes list before response
-        posts.map((post) => {
-            if (post.likes.some(user => user.id === req.user.id)) {
-                post.liked = true;
-            } else {
-                post.liked = false;
-            }
-            delete post.likes;
-        });
+        const posts = await service.getFollowingPosts(
+            req.user.id,
+            req.query.max,
+            req.query.comments,
+        );
 
         res.json(posts);
     } catch (err) {
@@ -146,7 +71,7 @@ async function getPost(req, res) {
         }
 
         // Check if current user has liked, then remove likes list before response
-        if (post.likes.some(user => user.id === req.user.id)) {
+        if (post.likes.some((user) => user.id === req.user.id)) {
             post.liked = true;
         } else {
             post.liked = false;
@@ -211,7 +136,7 @@ async function deletePost(req, res) {
 async function editPost(req, res) {
     if (!req.body || !req.body.text) {
         res.status(400).send(
-            "Bad request: Include post text/content as 'text' in req body"
+            "Bad request: Include post text/content as 'text' in req body",
         );
         return;
     }
